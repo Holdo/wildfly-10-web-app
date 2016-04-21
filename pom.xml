@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>cz.muni.fi.pv243</groupId>
-  <artifactId>intranet</artifactId>
+  <artifactId>wildfly-10-web-app</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>Intranet</name>
+  <name>WildFly 10 Demo Web App</name>
   <modules>
     <module>web</module>
   </modules>
