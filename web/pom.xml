@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>cz.muni.fi.pv243</groupId>
-		<artifactId>intranet</artifactId>
+		<artifactId>wildfly-10-web-app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
@@ -12,7 +12,7 @@
 	<packaging>war</packaging>
 
 	<name>web</name>
-	<description>A Java EE HTML5 mobile web application for use with JBoss.</description>
+	<description>A Java EE HTML5 mobile web application for use with WildFly.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
