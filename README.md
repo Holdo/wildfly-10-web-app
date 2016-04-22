@@ -13,3 +13,11 @@ All arquillian tests should end with AQ.java (i.e. DryTestAQ.java). Maven ignore
 Maven failsafe plugin is used to run arquillian tests (failsafe runs after the package goal).
 
 To run arquillian tests, use profile "aq" `mvn clean verify -Paq`
+
+Typical workflow:
+
+```
+mvn clean install
+./wildfly.sh
+mvn clean verify -Paq
+```
