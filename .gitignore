@@ -1,8 +1,15 @@
 /.settings/
-/web/target/
-/web/.settings/
+target/*
+*/target/*
+*.log
 
-*.class
+
+# =========================
+# Intellij IDEA
+# =========================
+*.iml
+.idea/*
+
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

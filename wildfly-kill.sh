@@ -1,0 +1,1 @@
+pgrep -d" " -f "wildfly" | xargs kill -9;
