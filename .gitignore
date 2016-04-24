@@ -5,10 +5,34 @@ target/*
 
 
 # =========================
+# Eclipse
+# =========================
+.project
+.classpath
+.settings/* 
+*/.settings/*
+
+# =========================
 # Intellij IDEA
 # =========================
 *.iml
 .idea/*
+*/.idea/*
+
+# =========================
+# NetBeans
+# =========================
+nbproject/*
+*/nbproject/*
+build/*
+*/build/*
+nbbuild/*
+*/nbbuild/*
+dist/*
+*/dist/*
+nbdist/*
+*/nbdist/*
+nbactions.xml
 
 
 # Mobile Tools for Java (J2ME)
