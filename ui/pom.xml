@@ -24,7 +24,18 @@
         <dependency>
             <groupId>cz.muni.fi.pv243</groupId>
             <artifactId>api</artifactId>
-            <type>war</type>
+        </dependency>
+        <dependency>
+            <groupId>cz.muni.fi.pv243</groupId>
+            <artifactId>service</artifactId>
+        </dependency>
+
+        <!-- provided -->
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-7.0</artifactId>
+            <scope>provided</scope>
+            <type>pom</type>
         </dependency>
 
         <!-- test -->

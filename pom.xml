@@ -34,19 +34,16 @@
                 <groupId>cz.muni.fi.pv243</groupId>
                 <artifactId>db</artifactId>
                 <version>1.0-SNAPSHOT</version>
-                <type>war</type>
             </dependency>
             <dependency>
                 <groupId>cz.muni.fi.pv243</groupId>
                 <artifactId>service</artifactId>
                 <version>1.0-SNAPSHOT</version>
-                <type>war</type>
             </dependency>
             <dependency>
                 <groupId>cz.muni.fi.pv243</groupId>
                 <artifactId>api</artifactId>
                 <version>1.0-SNAPSHOT</version>
-                <type>war</type>
             </dependency>
 
             <!-- import -->
@@ -113,6 +110,10 @@
                 <plugin>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.5.1</version>
+                    <configuration>
+                        <source>${project.source}</source>
+                        <target>${project.target}</target>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.wildfly.plugins</groupId>

@@ -4,13 +4,13 @@ import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
-import java.io.File;
 
 /**
  * Tests the JMS settings
@@ -35,8 +35,8 @@ public class JMSConfigAQ {
                                      SampleDao.class,
                                      SampleItem.class,
                                      TestDaoImpl.class)
-                         .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/activemq-jms.xml"))
-                         .addAsWebInfResource(new File("src/main/webapp", "WEB-INF/beans.xml"))
+                         .addAsWebInfResource("activemq-jms.xml")
+                         .addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml")
                          .addAsLibraries(((Maven.resolver().resolve(ASSERTJ)).withTransitivity()).asFile());
     }
 

@@ -12,8 +12,6 @@
     </parent>
     <artifactId>service</artifactId>
 
-    <packaging>war</packaging>
-
     <name>Service Layer</name>
     <description>
         This module contains JMS for asynchronous communication with persistence module.
@@ -23,7 +21,6 @@
         <dependency>
             <groupId>cz.muni.fi.pv243</groupId>
             <artifactId>db</artifactId>
-            <type>war</type>
         </dependency>
 
         <!-- provided -->

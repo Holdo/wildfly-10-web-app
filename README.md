@@ -6,6 +6,9 @@ run server:
 kill server (in case of errors):
 `./wildfly-kill.sh`
 
+### Running
+Only module UI is WAR archive, others are JARs. Deploy and test real app only via UI module.
+
 #### Arquillian
 To run arquillian tests, you must have wildfly up and running. We use remote connection.
 
@@ -20,4 +23,6 @@ Typical workflow:
 mvn clean install
 ./wildfly.sh
 mvn clean verify -Paq
+cd ui/
+mvn wildfly:deploy
 ```

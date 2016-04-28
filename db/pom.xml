@@ -12,8 +12,6 @@
     </parent>
     <artifactId>db</artifactId>
 
-    <packaging>war</packaging>
-
     <name>Persistence component</name>
     <description>
         This module contains infinispan and "dao" EJB to communicate with it.

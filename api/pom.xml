@@ -12,8 +12,6 @@
     </parent>
     <artifactId>api</artifactId>
 
-    <packaging>war</packaging>
-
     <name>API for web communication</name>
     <description>
         This module contains REST and WebSocket endpoints for
@@ -25,12 +23,10 @@
         <dependency>
             <groupId>cz.muni.fi.pv243</groupId>
             <artifactId>db</artifactId>
-            <type>war</type>
         </dependency>
         <dependency>
             <groupId>cz.muni.fi.pv243</groupId>
             <artifactId>service</artifactId>
-            <type>war</type>
         </dependency>
 
         <!-- test -->
