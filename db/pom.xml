@@ -11,6 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>db</artifactId>
+    <packaging>jar</packaging>
 
     <name>Persistence component</name>
     <description>
