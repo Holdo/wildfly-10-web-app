@@ -5,5 +5,8 @@
            xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-web_10_0.xsd">
 
     <context-root>/</context-root>
+    <security-domain>propsFile</security-domain>
+    <server-instance>default-server</server-instance> <!-- does mapping to server -->
+    <virtual-host>default-host</virtual-host>  <!-- does mapping to host inside server -->
 
 </jboss-web>

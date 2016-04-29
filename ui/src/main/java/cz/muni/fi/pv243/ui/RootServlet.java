@@ -1,6 +1,9 @@
 package cz.muni.fi.pv243.ui;
 
+import javax.annotation.security.DeclareRoles;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.HttpConstraint;
+import javax.servlet.annotation.ServletSecurity;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -10,12 +13,14 @@ import java.io.IOException;
 /**
  * Created by Michal Holic on 28/04/2016
  */
-@WebServlet(name = "RootServlet", urlPatterns = {"/root"}, loadOnStartup = 1)
+@ServletSecurity(@HttpConstraint(rolesAllowed = {"admin", "artist", "reviewer"}))
+@DeclareRoles({"admin", "artist", "reviewer"})
+@WebServlet(name = "RootServlet", urlPatterns = {"/"}, loadOnStartup = 1)
 public class RootServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/plain");
-		resp.getWriter().print("We're in business!");
+		resp.getWriter().print("Hello from RootServlet");
 	}
 }
