@@ -19,7 +19,30 @@
         Wrapper class for asynchronous communication with the EJB is included.
     </description>
 
+    <properties>
+        <infinispan.version>8.2.1.Final</infinispan.version>
+    </properties>
+
     <dependencies>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-core</artifactId>
+            <version>${infinispan.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.6</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
