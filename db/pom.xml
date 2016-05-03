@@ -31,6 +31,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- provided -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-7.0</artifactId>
@@ -38,11 +39,10 @@
             <type>pom</type>
         </dependency>
 
+        <!-- compile -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.6</version>
-            <scope>compile</scope>
         </dependency>
 
         <!-- test -->
