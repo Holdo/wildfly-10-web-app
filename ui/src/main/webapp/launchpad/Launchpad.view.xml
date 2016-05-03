@@ -1,0 +1,26 @@
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" controllerName='launchpad.Launchpad'>
+    <Page title="Audio app Launchpad">
+        <content>
+            <TileContainer
+                    id="container"
+                    tiles="{/data/TileCollection}">
+                <StandardTile
+                        press="handleTilePress"
+                        icon="{icon}"
+                        type="{type}"
+                        number="{number}"
+                        numberUnit="{numberUnit}"
+                        title="{title}"
+                        info="{info}"
+                        infoState="{infoState}"/>
+            </TileContainer>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
+                <ToolbarSpacer width="2em"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:View>
