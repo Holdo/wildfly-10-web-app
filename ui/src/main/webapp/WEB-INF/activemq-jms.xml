@@ -4,7 +4,6 @@
         <jms-destinations>
             <jms-queue name="ArtistQueue">
                 <entry name="java:jboss/exported/jms/ArtistQueue"/>
-                <durable>true</durable>
             </jms-queue>
         </jms-destinations>
     </server>

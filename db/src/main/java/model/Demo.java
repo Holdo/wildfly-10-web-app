@@ -1,10 +1,10 @@
 package model;
 
-import com.sun.istack.internal.NotNull;
 import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
