@@ -17,10 +17,10 @@
     <login-config>
         <auth-method>BASIC</auth-method>
         <!--<realm-name>ApplicationRealm</realm-name>-->
-        <form-login-config>
-            <form-login-page>/login.html</form-login-page>
-            <form-error-page>/403.html</form-error-page>
-        </form-login-config>
+        <!--<form-login-config>-->
+            <!--<form-login-page>/login.html</form-login-page>-->
+            <!--<form-error-page>/403.html</form-error-page>-->
+        <!--</form-login-config>-->
     </login-config>
 
     <security-role>
