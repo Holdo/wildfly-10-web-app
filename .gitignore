@@ -2,8 +2,8 @@
 target/*
 */target/*
 *.log
-/wildfly-10.0.0.Final/standalone/data/bindings/*
-/wildfly-10.0.0.Final/standalone/data/journal/*
+/wildfly-10.0.0.Final/standalone/data/activemq/bindings/*
+/wildfly-10.0.0.Final/standalone/data/activemq/journal/*
 
 
 # =========================
