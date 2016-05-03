@@ -2,7 +2,7 @@
 target/*
 */target/*
 *.log
-wildfly-10.0.0.Final/standalone/data/activemq/*
+wildfly-10.0.0.Final/standalone/data/activemq
 
 
 # =========================
