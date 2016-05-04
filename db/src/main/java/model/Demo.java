@@ -2,6 +2,7 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.validation.constraints.NotNull;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @Getter
 @Setter
+@Indexed
 public class Demo implements Serializable {
 
     private static final long serialVersionUID = 7910152804839284560L;

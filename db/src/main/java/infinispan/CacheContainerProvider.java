@@ -44,10 +44,10 @@ public class CacheContainerProvider {
 
             Configuration demoCacheConfig = new ConfigurationBuilder().jmxStatistics().enable()
                     .clustering().cacheMode(CacheMode.LOCAL)
-                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL).autoCommit(false)
+                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL).autoCommit(true)
                     .lockingMode(LockingMode.OPTIMISTIC).transactionManagerLookup(new GenericTransactionManagerLookup())
                     .locking().isolationLevel(IsolationLevel.REPEATABLE_READ)
-                    .eviction().strategy(EvictionStrategy.UNORDERED)
+                    .eviction().maxEntries(10).strategy(EvictionStrategy.LRU)
                     .persistence().passivation(true).addSingleFileStore().purgeOnStartup(true)
                     .indexing().enable().addProperty("default.directory_provider", "ram")
                     .build();

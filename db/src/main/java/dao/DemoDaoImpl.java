@@ -8,6 +8,7 @@ import org.infinispan.query.Search;
 import org.infinispan.query.dsl.Query;
 import org.infinispan.query.dsl.QueryFactory;
 
+import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.UserTransaction;
 import java.io.UnsupportedEncodingException;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  *
  * @author Marian Camak on 4. 5. 2016.
  */
+@Model
 public class DemoDaoImpl implements DemoDAO {
 
     public static final String DEMO_CACHE_NAME = "demoCache";
@@ -102,9 +104,9 @@ public class DemoDaoImpl implements DemoDAO {
     @Override
     public List<Demo> findAll() {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-        List<Demo> demoList = (List<Demo>) demoCache.values();
+        List<Demo> demoList = new LinkedList<>(demoCache.values());
 
-        return new LinkedList<>(demoList);
+        return demoList;
     }
 
     public static String encode(String key) {
