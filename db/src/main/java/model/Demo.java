@@ -1,6 +1,5 @@
 package model;
 
-import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,6 +18,7 @@ import java.util.List;
 @Setter
 public class Demo implements Serializable {
 
+    private static final long serialVersionUID = 7910152804839284560L;
     /**
      * Unique name of the demo.
      */
@@ -45,7 +45,46 @@ public class Demo implements Serializable {
     /**
      * Collection of user comments.
      */
-    private List<Pair<String, String>> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Demo demo = (Demo) o;
+
+        if (!getTitle().equals(demo.getTitle())) return false;
+        return getInterpret().equals(demo.getInterpret());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getTitle().hashCode();
+        result = 31 * result + getInterpret().hashCode();
+        return result;
+    }
+
+    /**
+     * Class representing a comment to a demo for exchange of notes and information.
+     */
+    @Getter
+    @Setter
+    public class Comment implements Serializable {
+        private static final long serialVersionUID = -6729363174359158134L;
+
+        /**
+         * Author of the comment
+         */
+        @NotNull
+        private String author;
+
+        /**
+         * Text of a comment
+         */
+        private String comment;
+    }
 
     /**
      * Status of a demo.
@@ -70,24 +109,5 @@ public class Demo implements Serializable {
          * Demo was published in our label.
          */
         PUBLISHED
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Demo demo = (Demo) o;
-
-        if (!getTitle().equals(demo.getTitle())) return false;
-        return getInterpret().equals(demo.getInterpret());
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getTitle().hashCode();
-        result = 31 * result + getInterpret().hashCode();
-        return result;
     }
 }
