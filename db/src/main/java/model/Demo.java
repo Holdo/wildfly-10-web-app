@@ -2,6 +2,8 @@ package model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.validation.constraints.NotNull;
@@ -17,7 +19,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@Indexed
+@Indexed(index="DemoIndex")
 public class Demo implements Serializable {
 
     private static final long serialVersionUID = 7910152804839284560L;
@@ -25,28 +27,33 @@ public class Demo implements Serializable {
      * Unique name of the demo.
      */
     @NotNull
+    @Field(analyze= Analyze.NO)
     private String title;
 
     /**
      * Interpret of the demo.
      */
     @NotNull
+    @Field(analyze=Analyze.NO)
     private String interpret;
 
     /**
      * Demo track.
      */
     @NotNull
+    @Field(analyze=Analyze.NO)
     private File track;
 
     /**
      * Status of the demo uploaded.
      */
+    @Field(analyze=Analyze.NO)
     private Status status;
 
     /**
      * Collection of user comments.
      */
+    @Field(analyze=Analyze.NO)
     private List<Comment> comments = new ArrayList<>();
 
     @Override
@@ -86,6 +93,11 @@ public class Demo implements Serializable {
          * Text of a comment
          */
         private String comment;
+
+        /**
+         * Reactions to an comment
+         */
+        private List<Comment> reactions = new ArrayList<>();
     }
 
     /**

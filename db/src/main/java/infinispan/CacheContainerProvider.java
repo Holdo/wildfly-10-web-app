@@ -1,9 +1,11 @@
 package infinispan;
 
+import dao.DemoDaoImpl;
 import org.infinispan.commons.api.BasicCacheContainer;
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
 import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.global.GlobalConfiguration;
 import org.infinispan.configuration.global.GlobalConfigurationBuilder;
 import org.infinispan.eviction.EvictionStrategy;
 import org.infinispan.manager.DefaultCacheManager;
@@ -30,17 +32,15 @@ public class CacheContainerProvider {
 
     public BasicCacheContainer getCacheContainer() {
         if (manager == null) {
-            GlobalConfigurationBuilder global = GlobalConfigurationBuilder.defaultClusteredBuilder();
-            global.transport().clusterName("LabelWeb");
 
-            Configuration config = new ConfigurationBuilder()
-                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL)
-                    .clustering().cacheMode(CacheMode.REPL_SYNC)
+            GlobalConfiguration glob = GlobalConfigurationBuilder.defaultClusteredBuilder()
+                    .transport().clusterName("LabelWeb")
                     .build();
 
-            DefaultCacheManager defaultCacheManager = new DefaultCacheManager(global.build(), config);
-            defaultCacheManager.addListener(new CacheOperationLogger());
-            manager = defaultCacheManager;
+            Configuration defaultConfig = new ConfigurationBuilder()
+                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL)
+//                    .clustering().cacheMode(CacheMode.REPL_SYNC)
+                    .build();  //default config
 
             Configuration demoCacheConfig = new ConfigurationBuilder().jmxStatistics().enable()
                     .clustering().cacheMode(CacheMode.LOCAL)
@@ -52,8 +52,8 @@ public class CacheContainerProvider {
                     .indexing().enable().addProperty("default.directory_provider", "ram")
                     .build();
 
-            ((DefaultCacheManager) manager).defineConfiguration("demoCache", demoCacheConfig);
-
+            manager = new DefaultCacheManager(glob, defaultConfig);
+            ((DefaultCacheManager) manager).defineConfiguration(DemoDaoImpl.DEMO_CACHE_NAME, demoCacheConfig);
             manager.start();
             log.info("Cache container configured. ");
         }

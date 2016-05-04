@@ -104,9 +104,7 @@ public class DemoDaoImpl implements DemoDAO {
     @Override
     public List<Demo> findAll() {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-        List<Demo> demoList = new LinkedList<>(demoCache.values());
-
-        return demoList;
+        return new LinkedList<>(demoCache.values());
     }
 
     public static String encode(String key) {
