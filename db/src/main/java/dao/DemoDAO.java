@@ -16,6 +16,6 @@ public interface DemoDAO {
     void deleteDemo(Demo demo);
 
     Demo findDemo(String title);
-    List<Demo> findDemos(String user);
+    List<Demo> findDemos(String interpret);
     List<Demo> findAll();
 }
