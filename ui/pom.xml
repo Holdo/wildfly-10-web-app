@@ -30,27 +30,18 @@
             <artifactId>service</artifactId>
         </dependency>
 
-        <!-- provided -->
         <dependency>
             <groupId>org.jboss.spec</groupId>
             <artifactId>jboss-javaee-7.0</artifactId>
+            <version>1.0.3.Final</version>
             <scope>provided</scope>
             <type>pom</type>
         </dependency>
-
         <dependency>
             <groupId>org.wildfly</groupId>
             <artifactId>wildfly-clustering-web-api</artifactId>
             <version>10.0.0.Final</version>
             <scope>provided</scope>
-        </dependency>
-
-
-        <!-- test -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <!-- arquillian -->
@@ -64,11 +55,6 @@
             <artifactId>shrinkwrap-resolver-depchain</artifactId>
             <scope>test</scope>
             <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.wildfly.arquillian</groupId>
-            <artifactId>wildfly-arquillian-container-remote</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

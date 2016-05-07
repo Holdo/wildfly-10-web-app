@@ -10,10 +10,9 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
-    <packaging>jar</packaging>
-    <groupId>api</groupId>
     <artifactId>api</artifactId>
+    <packaging>jar</packaging>
+
 
     <name>API for web communication</name>
     <description>
@@ -32,11 +31,12 @@
             <artifactId>service</artifactId>
         </dependency>
 
-        <!-- test -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-web-7.0</artifactId>
+            <version>1.0.3.Final</version>
+            <scope>provided</scope>
+            <type>pom</type>
         </dependency>
 
         <!-- arquillian -->
@@ -56,78 +56,7 @@
             <artifactId>wildfly-arquillian-container-remote</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- RestEasy -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>3.0.11.Final</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-servlet-initializer</artifactId>
-            <version>3.0.13.Final</version>
-        </dependency>
-<dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
-            <version>3.0.4.Final</version>
-        </dependency>
-        <dependency>
-   <groupId>org.javassist</groupId>
-   <artifactId>javassist</artifactId>
-   <version>3.20.0-GA</version>
-</dependency>
-<dependency>
-	<groupId>org.scannotation</groupId>
-	<artifactId>scannotation</artifactId>
-	<version>1.0.3</version>
-</dependency>
 
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-multipart-provider</artifactId>
-            <version>2.2.0.GA</version>
-            <scope>provided</scope>
-        </dependency>
-<dependency>
-	<groupId>org.jboss.logging</groupId>
-	<artifactId>jboss-logging</artifactId>
-	<version>3.3.0.Final</version>
-</dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.2</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
-            <version>3.0.4.Final</version>
-        </dependency>
-        <!-- Below dependency is for JAXB integration -->
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.13.Final</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.spec</groupId>
-            <artifactId>jboss-javaee-7.0</artifactId>
-            <scope>provided</scope>
-            <type>pom</type>
-        </dependency>
     </dependencies>
-
-
 
 </project>

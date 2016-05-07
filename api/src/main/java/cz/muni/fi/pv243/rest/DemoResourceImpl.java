@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pv243.rest;
 
 import java.util.List;
@@ -12,17 +7,8 @@ import dao.DemoDAO;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
-import org.jboss.resteasy.plugins.providers.multipart.InputPart;
-import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
-import org.apache.commons.io.IOUtils;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
@@ -31,24 +17,32 @@ import org.apache.commons.io.IOUtils;
 public class DemoResourceImpl implements DemoResource {
 
     @Inject
-    DemoDAO demoDao;
+    private DemoDAO demoDao;
 
-    @Override
+    @GET
+    @Path("/getAll")
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Demo> findAll() {
         return demoDao.findAll();
     }
 
-    @Override
+    @GET
+    @Path("/artist/{artist}")
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Demo> findAllFromArtist(String artist) {
         return demoDao.findDemos(artist);
     }
 
-    @Override
+    @GET
+    @Path("/title/{title}")
+    @Produces({MediaType.APPLICATION_JSON})
     public Demo findByTitle(String title) {
         return demoDao.findDemo(title);
     }
 
-    @Override
+    /*@PUT
+    @Path("/demo/add/{artist}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     public void addDemo(String artist, MultipartFormDataInput input) {
         Demo demo = new Demo();
         String fileName = "";
@@ -77,9 +71,10 @@ public class DemoResourceImpl implements DemoResource {
         demo.setArtist(artist);
         demo.setStatus(Demo.Status.UPLOADED);
         demoDao.createDemo(demo);
-    }
+    }*/
 
-    @Override
+    @DELETE
+    @Path("/demo/delete/{title}")
     public void removeDemo(String title) {
         demoDao.deleteDemo(demoDao.findDemo(title));
     }
