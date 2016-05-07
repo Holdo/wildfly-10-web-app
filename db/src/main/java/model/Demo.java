@@ -35,7 +35,7 @@ public class Demo implements Serializable {
      */
     @NotNull
     @Field(analyze=Analyze.NO)
-    private String interpret;
+    private String artist;
 
     /**
      * Demo track.
@@ -64,15 +64,23 @@ public class Demo implements Serializable {
         Demo demo = (Demo) o;
 
         if (!getTitle().equals(demo.getTitle())) return false;
-        return getInterpret().equals(demo.getInterpret());
+        return getArtist().equals(demo.getArtist());
 
     }
 
     @Override
     public int hashCode() {
         int result = getTitle().hashCode();
-        result = 31 * result + getInterpret().hashCode();
+        result = 31 * result + getArtist().hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Demo {" +
+                "title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                '}';
     }
 
     /**
