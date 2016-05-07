@@ -12,7 +12,6 @@ import org.infinispan.notifications.cachelistener.event.CacheEntryModifiedEvent;
 import org.infinispan.notifications.cachelistener.event.CacheEntryRemovedEvent;
 import org.infinispan.notifications.cachelistener.event.CacheEntryVisitedEvent;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,8 +33,8 @@ public class CacheOperationLogger {
     @Inject
     private CacheContainerProvider provider;
 
-    @PostConstruct
-    public void getStatsObject() {
+//    @PostConstruct
+    public void init() {
         ((DefaultCacheManager) provider.getCacheContainer()).getCache(DemoDaoImpl.DEMO_CACHE_NAME).addListener(this);
     }
 
