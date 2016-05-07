@@ -10,20 +10,24 @@ import org.infinispan.query.dsl.QueryFactory;
 
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
-import javax.transaction.UserTransaction;
+import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
+
 /**
  * Implementation of interface <link>DemoDAO</link>
- * @see DemoDAO
  *
  * @author Marian Camak on 4. 5. 2016.
+ * @see DemoDAO
  */
 @Model
+@Transactional(REQUIRES_NEW)
 public class DemoDaoImpl implements DemoDAO {
 
     public static final String DEMO_CACHE_NAME = "demoCache";
@@ -31,29 +35,12 @@ public class DemoDaoImpl implements DemoDAO {
     @Inject
     private CacheContainerProvider provider;
 
-    @Inject
-    private UserTransaction utx;
-
-    private BasicCache<String, Demo> demoCache;
+    private BasicCache<String, Object> demoCache;
 
     @Override
     public void createDemo(Demo demo) {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-
-        try {
-            utx.begin();
-
-            demoCache.put(encode(demo.getTitle()), demo);
-
-            utx.commit();
-        } catch (Exception e) {
-            if (utx != null) {
-                try {
-                    utx.rollback();
-                } catch (Exception ignored) {
-                }
-            }
-        }
+        demoCache.put(encode(demo.getTitle()), demo);
     }
 
     @Override
@@ -64,27 +51,13 @@ public class DemoDaoImpl implements DemoDAO {
     @Override
     public void deleteDemo(Demo demo) {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-
-        try {
-            utx.begin();
-
-            demoCache.remove(encode(demo.getTitle()));
-
-            utx.commit();
-        } catch (Exception e) {
-            if (utx != null) {
-                try {
-                    utx.rollback();
-                } catch (Exception ignored) {
-                }
-            }
-        }
+        demoCache.remove(encode(demo.getTitle()));
     }
 
     @Override
     public Demo findDemo(String title) {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-        return demoCache.get(encode(title));
+        return (Demo) demoCache.get(encode(title));
     }
 
     @Override
@@ -93,18 +66,18 @@ public class DemoDaoImpl implements DemoDAO {
         QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
 
         Query q = qf.from(Demo.class)
-                .having("interpret").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
+                .having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
                 .toBuilder().build();
-        System.out.println("Infinispan Query DSL: " + q.toString() );
+        System.out.println("Infinispan Query DSL: " + q.toString());
 
-        // invoke the cache query
         return q.list().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
     }
 
     @Override
     public List<Demo> findAll() {
         demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-        return new LinkedList<>(demoCache.values());
+        Collection<Demo> demos = demoCache.values().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
+        return new LinkedList<>(demos);
     }
 
     public static String encode(String key) {
