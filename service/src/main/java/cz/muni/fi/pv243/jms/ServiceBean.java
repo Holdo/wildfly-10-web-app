@@ -8,6 +8,8 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import static model.Demo.Status.UPLOADED;
+
 @Slf4j
 @RequestScoped
 public class ServiceBean {
@@ -18,8 +20,8 @@ public class ServiceBean {
     private static Demo testDemo = new Demo();
 
     static {
-        testDemo.setInterpret("Interpreeteurer");
-        testDemo.setStatus(Demo.Status.UPLOADED);
+        testDemo.setArtist("Interpreeteurer");
+        testDemo.setStatus(UPLOADED);
         testDemo.setTitle("titelel");
     }
 
