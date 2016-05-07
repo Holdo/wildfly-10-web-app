@@ -1,6 +1,7 @@
 package infinispan;
 
 import dao.DemoDaoImpl;
+import model.Demo;
 import org.infinispan.commons.api.BasicCacheContainer;
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
@@ -16,6 +17,7 @@ import org.infinispan.util.concurrent.IsolationLevel;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.logging.Logger;
 
 /**
@@ -30,31 +32,48 @@ public class CacheContainerProvider {
 
     private BasicCacheContainer manager;
 
+    @Inject
+    private CacheOperationLogger cacheLogger;
+
     public BasicCacheContainer getCacheContainer() {
         if (manager == null) {
-
             GlobalConfiguration glob = GlobalConfigurationBuilder.defaultClusteredBuilder()
-                    .transport().clusterName("LabelWeb")
+                    .transport().defaultTransport()
+                    .clusterName("LabelWeb")
+                    .globalJmxStatistics().enable()
+                    .jmxDomain("org.infinispan.demo")
+//                    .addProperty("configurationFile", "jgroups-tcp.xml")
                     .build();
 
             Configuration defaultConfig = new ConfigurationBuilder()
-                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL)
-//                    .clustering().cacheMode(CacheMode.REPL_SYNC)
+                    .clustering().cacheMode(CacheMode.DIST_SYNC).sync()
                     .build();  //default config
 
-            Configuration demoCacheConfig = new ConfigurationBuilder().jmxStatistics().enable()
-                    .clustering().cacheMode(CacheMode.LOCAL)
-                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL).autoCommit(true)
+            @SuppressWarnings("deprecation")
+            Configuration demoCacheConfig = new ConfigurationBuilder()
+                    .jmxStatistics().enable()
+                    .transaction()
+                        .transactionMode(TransactionMode.TRANSACTIONAL)
+                        .autoCommit(true)
                     .lockingMode(LockingMode.OPTIMISTIC).transactionManagerLookup(new GenericTransactionManagerLookup())
                     .locking().isolationLevel(IsolationLevel.REPEATABLE_READ)
-                    .eviction().maxEntries(10).strategy(EvictionStrategy.LRU)
-                    .persistence().passivation(true).addSingleFileStore().purgeOnStartup(true)
-                    .indexing().enable().addProperty("default.directory_provider", "ram")
+                    .eviction()
+                        .maxEntries(10)
+                        .strategy(EvictionStrategy.LRU)
+                    .persistence()
+                        .passivation(true)
+                        .addSingleFileStore()
+                        .purgeOnStartup(true)
+                    .indexing()
+                        .addIndexedEntity(Demo.class)
+                        .addProperty("default.directory_provider", "ram")
                     .build();
 
             manager = new DefaultCacheManager(glob, defaultConfig);
             ((DefaultCacheManager) manager).defineConfiguration(DemoDaoImpl.DEMO_CACHE_NAME, demoCacheConfig);
             manager.start();
+
+            cacheLogger.init();
             log.info("Cache container configured. ");
         }
         return manager;
