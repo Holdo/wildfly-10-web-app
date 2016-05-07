@@ -8,6 +8,7 @@ import org.infinispan.query.Search;
 import org.infinispan.query.dsl.Query;
 import org.infinispan.query.dsl.QueryFactory;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 /**
  * Implementation of interface <link>DemoDAO</link>
@@ -37,9 +39,13 @@ public class DemoDaoImpl implements DemoDAO {
 
     private BasicCache<String, Object> demoCache;
 
+    @PostConstruct
+    public void init() {
+        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
+    }
+
     @Override
     public void createDemo(Demo demo) {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
         demoCache.put(encode(demo.getTitle()), demo);
     }
 
@@ -50,19 +56,16 @@ public class DemoDaoImpl implements DemoDAO {
 
     @Override
     public void deleteDemo(Demo demo) {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
         demoCache.remove(encode(demo.getTitle()));
     }
 
     @Override
     public Demo findDemo(String title) {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
         return (Demo) demoCache.get(encode(title));
     }
 
     @Override
     public List<Demo> findDemos(String interpret) {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
         QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
 
         Query q = qf.from(Demo.class)
@@ -75,11 +78,11 @@ public class DemoDaoImpl implements DemoDAO {
 
     @Override
     public List<Demo> findAll() {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
         Collection<Demo> demos = demoCache.values().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
         return new LinkedList<>(demos);
     }
 
+    @Transactional(SUPPORTS)
     public static String encode(String key) {
         try {
             return URLEncoder.encode(key, "UTF-8");
