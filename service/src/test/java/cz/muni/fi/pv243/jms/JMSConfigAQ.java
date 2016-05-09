@@ -1,5 +1,7 @@
 package cz.muni.fi.pv243.jms;
 
+import dao.DemoDAO;
+import model.Demo;
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -32,25 +34,26 @@ public class JMSConfigAQ {
         return ShrinkWrap.create(WebArchive.class)
                          .addClasses(ArtistMessageSender.class,
                                      ArtistMessageReceiver.class,
-                                     SampleDao.class,
-                                     SampleItem.class,
+                                     Demo.class,
+                                     DemoDTO.class,
+                                     DemoDAO.class,
                                      TestDaoImpl.class)
                          .addAsWebInfResource("activemq-jms.xml")
-                         .addAsWebInfResource(EmptyAsset.INSTANCE,"beans.xml")
+                         .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                          .addAsLibraries(((Maven.resolver().resolve(ASSERTJ)).withTransitivity()).asFile());
     }
 
     @Test
     public void jms() throws InterruptedException {
-        final SampleItem item = new SampleItem("Sample Name");
+        final DemoDTO dto = new DemoDTO("Sample Name", "Sample Artist", new byte[0]);
 
-        this.sender.send(item);
+        this.sender.sendCreateNew(dto);
 
         Thread.sleep(1000L); //for message to receive
 
         Assertions.assertThat(this.testDaoImpl.getLastItem())
                   .isNotNull()
-                  .isEqualTo(item);
+                  .isEqualTo(dto.toDemo());
     }
 
 }

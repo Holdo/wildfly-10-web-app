@@ -21,9 +21,9 @@ public class ArtistMessageSender {
     @Resource(lookup = "java:jboss/exported/jms/ArtistQueue")
     private Queue queue;
 
-    public void send(SampleItem message) {
-        this.context.createProducer().send(queue, message);
-        log.info("Message sent {}", message);
+    public void sendCreateNew(DemoDTO demoDTO) {
+        this.context.createProducer().send(queue, demoDTO);
+        log.info("Message sent {}", demoDTO);
     }
 
 }

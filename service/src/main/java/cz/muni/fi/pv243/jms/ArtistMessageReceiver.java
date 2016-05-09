@@ -1,5 +1,6 @@
 package cz.muni.fi.pv243.jms;
 
+import dao.DemoDAO;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.ejb.ActivationConfigProperty;
@@ -25,14 +26,15 @@ import javax.jms.MessageListener;
 public class ArtistMessageReceiver implements MessageListener {
 
     @Inject
-    private SampleDao sampleDao;
+    private DemoDAO sampleDao;
 
     @Override
     public void onMessage(Message message) {
+        // creating only for now
         try {
-            final SampleItem content = message.getBody(SampleItem.class);
+            final DemoDTO content = message.getBody(DemoDTO.class);
             log.info("Message received: {}", content);
-            this.sampleDao.store(content);
+            this.sampleDao.createDemo(content.toDemo());
         } catch (JMSException e) {
             log.error("Error receiving message: {}", message, e);
         }
