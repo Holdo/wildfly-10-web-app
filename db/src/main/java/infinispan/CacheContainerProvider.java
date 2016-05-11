@@ -14,11 +14,12 @@ import org.infinispan.transaction.LockingMode;
 import org.infinispan.transaction.TransactionMode;
 import org.infinispan.transaction.lookup.GenericTransactionManagerLookup;
 import org.infinispan.util.concurrent.IsolationLevel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import java.util.logging.Logger;
 
 /**
  * Implementation of {@link CacheContainerProvider} creating a programmatically configured DefaultCacheManager.
@@ -28,7 +29,7 @@ import java.util.logging.Logger;
 @ApplicationScoped
 public class CacheContainerProvider {
 
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private BasicCacheContainer manager;
 
@@ -46,17 +47,22 @@ public class CacheContainerProvider {
                     .build();
 
             Configuration defaultConfig = new ConfigurationBuilder()
-                    .clustering().cacheMode(CacheMode.DIST_SYNC).sync()
-                    .build();  //default config
+                    .transaction().transactionMode(TransactionMode.TRANSACTIONAL)
+                    .build();
 
             @SuppressWarnings("deprecation")
             Configuration demoCacheConfig = new ConfigurationBuilder()
                     .jmxStatistics().enable()
+                    .clustering()
+                        .cacheMode(CacheMode.DIST_SYNC)
+                        .sync()
                     .transaction()
                         .transactionMode(TransactionMode.TRANSACTIONAL)
-                        .autoCommit(true)
-                    .lockingMode(LockingMode.OPTIMISTIC).transactionManagerLookup(new GenericTransactionManagerLookup())
-                    .locking().isolationLevel(IsolationLevel.REPEATABLE_READ)
+                        .autoCommit(false)
+                        .lockingMode(LockingMode.OPTIMISTIC)
+                        .transactionManagerLookup(new GenericTransactionManagerLookup())
+                        .locking().isolationLevel(IsolationLevel.REPEATABLE_READ)
+                        .supportsConcurrentUpdates(true)
                     .eviction()
                         .maxEntries(10)
                         .strategy(EvictionStrategy.LRU)
@@ -65,6 +71,7 @@ public class CacheContainerProvider {
                         .addSingleFileStore()
                         .purgeOnStartup(true)
                     .indexing()
+                        .enable()
                         .addIndexedEntity(Demo.class)
                         .addProperty("default.directory_provider", "ram")
                     .build();
