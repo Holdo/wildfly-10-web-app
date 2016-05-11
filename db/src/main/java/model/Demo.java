@@ -1,13 +1,14 @@
 package model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.validation.constraints.NotNull;
-import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,13 @@ import java.util.List;
  */
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Indexed(index="DemoIndex")
 public class Demo implements Serializable {
 
     private static final long serialVersionUID = 7910152804839284560L;
+
     /**
      * Unique name of the demo.
      */
@@ -41,8 +45,7 @@ public class Demo implements Serializable {
      * Demo track.
      */
     @NotNull
-    @Field(analyze=Analyze.NO)
-    private File track;
+    private byte[] track;
 
     /**
      * Status of the demo uploaded.
@@ -53,7 +56,6 @@ public class Demo implements Serializable {
     /**
      * Collection of user comments.
      */
-    @Field(analyze=Analyze.NO)
     private List<Comment> comments = new ArrayList<>();
 
     @Override
@@ -65,7 +67,6 @@ public class Demo implements Serializable {
 
         if (!getTitle().equals(demo.getTitle())) return false;
         return getArtist().equals(demo.getArtist());
-
     }
 
     @Override
@@ -112,6 +113,7 @@ public class Demo implements Serializable {
      * Status of a demo.
      */
     public enum Status {
+
         /**
          * Demo was uploaded, but not reviewed yet.
          */
