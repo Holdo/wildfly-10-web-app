@@ -42,6 +42,13 @@ public class Demo implements Serializable {
     private String artist;
 
     /**
+     * E-mail address of the artist.
+     */
+    @NotNull
+    @Field(analyze=Analyze.NO)
+    private String email;
+
+    /**
      * Demo track.
      */
     @NotNull
