@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author skylar
  */
+@Path("/demo")
 public class DemoResourceImpl implements DemoResource {
 
     @Inject
