@@ -9,6 +9,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +28,15 @@ import java.util.List;
 public class Demo implements Serializable {
 
     private static final long serialVersionUID = 7910152804839284560L;
+    private static final String EMAIL_PATTERN =
+            "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
     /**
      * Unique name of the demo.
      */
     @NotNull
+    @Size(min=3, max=255)
     @Field(analyze= Analyze.NO)
     private String title;
 
@@ -38,6 +44,7 @@ public class Demo implements Serializable {
      * Interpret of the demo.
      */
     @NotNull
+    @Size(min=3, max=255)
     @Field(analyze=Analyze.NO)
     private String artist;
 
@@ -45,6 +52,7 @@ public class Demo implements Serializable {
      * E-mail address of the artist.
      */
     @NotNull
+    @Pattern(regexp=EMAIL_PATTERN)
     @Field(analyze=Analyze.NO)
     private String email;
 
@@ -57,6 +65,7 @@ public class Demo implements Serializable {
     /**
      * Status of the demo uploaded.
      */
+    @NotNull
     @Field(analyze=Analyze.NO)
     private Status status;
 
@@ -96,6 +105,8 @@ public class Demo implements Serializable {
      */
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public class Comment implements Serializable {
         private static final long serialVersionUID = -6729363174359158134L;
 
@@ -103,11 +114,14 @@ public class Demo implements Serializable {
          * Author of the comment
          */
         @NotNull
+        @Size(min=3, max=255)
         private String author;
 
         /**
          * Text of a comment
          */
+        @NotNull
+        @Size(min=3, max=1024)
         private String comment;
 
         /**
