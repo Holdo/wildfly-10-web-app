@@ -1,0 +1,79 @@
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+           controllerName='audioinput.AudioInput'>
+    <Page title="Audio Review">
+        <content>
+            <Panel width="auto" class="sapUiSmallMargin">
+                <content>
+                    <VBox alignItems="Center" justifyContent="SpaceBetween">
+                        <Text text="Welcome to our Audio Review app" class="sapMH4FontSize"/>
+                        <Text text="Please fill out the form below" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </content>
+            </Panel>
+            <l:Grid defaultSpan="XL12 L12 M12 S12" position="Center">
+                <VBox alignItems="Center">
+                    <form:SimpleForm title="Artist's input form" layout="ResponsiveGridLayout">
+                        <Label text="Name" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+                        <Input id="nameInput"
+                               class="sapUiSmallMarginBottom"
+                               type="Text"
+                               placeholder="Enter your name..."
+                               valueStateText="Minimum 3 characters. Maximum 255."
+                               value="{
+					                            path : '/name',
+					                            type : 'sap.ui.model.type.String',
+					                            constraints : {
+					                            	minLength: 3,
+					                            	maxLength: 255
+					                            }
+				                               }"/>
+                        <Label text="Email" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+                        <Input id="emailInput"
+                               class="sapUiSmallMarginBottom"
+                               type="Email"
+                               placeholder="Enter your email..."
+                               valueStateText="Must be a valid email address."
+                               value="{
+					                            path : '/email',
+					                            type : '.typeEMail'
+				                               }"/>
+                        <Label text="Track Title" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+                        <Input id="titleInput"
+                               class="sapUiSmallMarginBottom"
+                               type="Text"
+                               placeholder="Enter your track title..."
+                               valueStateText="Minimum 3 characters. Maximum 255."
+                               value="{
+					                            path : '/title',
+					                            type : 'sap.ui.model.type.String',
+					                            constraints : {
+					                            	minLength: 3,
+					                            	maxLength: 255
+					                            }
+				                               }"/>
+                        <Label text="Track File" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+                        <u:FileUploader
+                                id="trackFileUploader"
+                                placeholder="Upload your mp3 track..."
+                                name="myFileUpload"
+                                icon="sap-icon://attachment-audio"
+                                width="30rem"
+                                fileType="mp3"
+                                typeMissmatch="handleFileTypeMissmatch"
+                                change="handleFileUploaderChange"/>
+                    </form:SimpleForm>
+                    <Button id="uploadDemoButton" class="sapUiSmallMarginTop" type="Emphasized"
+                            icon="sap-icon://upload-to-cloud" text="Light it up!"
+                            press="handleDemoButtonPress"/>
+                </VBox>
+            </l:Grid>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
+                <ToolbarSpacer width="2em"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:View>

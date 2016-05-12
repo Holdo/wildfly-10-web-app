@@ -32,7 +32,7 @@ sap.ui.define([
             this.getView().setModel(this.tileModelJSON);
         },
         onExit : function (oEvent) {
-
+            //Pls do not leave
         },
         handleTilePress : function (oEvent) {
             switch(oEvent.oSource.getTitle()) {
