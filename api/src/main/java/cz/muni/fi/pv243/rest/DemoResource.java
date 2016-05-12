@@ -6,7 +6,7 @@ import model.Demo;
 
 /**
  *
- * @author skylar
+ * @author Diana Vilkolakova
  */
 public interface DemoResource {
 
@@ -16,10 +16,13 @@ public interface DemoResource {
 
     Demo findByTitle(@PathParam("title") String id);
 
-    /*void addDemo(
-            @PathParam("artist") String artist,
-            MultipartFormDataInput track
-    );*/
+    public void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
+            @PathParam("title") String title,
+            @PathParam("email") String email);
+
+    public void addTitle(@PathParam("title") String title);
+
+    public void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title);
 
     void removeDemo(@PathParam("title") String title);
 

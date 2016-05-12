@@ -4,15 +4,12 @@ import java.util.List;
 import javax.inject.Inject;
 import model.Demo;
 import dao.DemoDAO;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author skylar
+ * @author Diana Vilkolakova
  */
 @Path("/demo")
 public class DemoResourceImpl implements DemoResource {
@@ -21,7 +18,7 @@ public class DemoResourceImpl implements DemoResource {
     private DemoDAO demoDao;
 
     @GET
-    @Path("/getAll")
+    @Path("/findAll")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Demo> findAll() {
         return demoDao.findAll();
@@ -30,64 +27,52 @@ public class DemoResourceImpl implements DemoResource {
     @GET
     @Path("/artist/{artist}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Demo> findAllFromArtist(String artist) {
+    public List<Demo> findAllFromArtist(@PathParam("artist") String artist) {
         return demoDao.findDemos(artist);
     }
 
     @GET
     @Path("/title/{title}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Demo findByTitle(String title) {
+    public Demo findByTitle(@PathParam("title") String title) {
         return demoDao.findDemo(title);
     }
 
-    /*@PUT
-    @Path("/demo/add/{artist}")
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void addDemo(String artist, MultipartFormDataInput input) {
+    @PUT
+    @Path("/{title}")
+    public void addTitle(@PathParam("title") String title) {
         Demo demo = new Demo();
-        String fileName = "";
-        Map<String, List<InputPart>> formParts = input.getFormDataMap();
+        demo.setTitle(title);
+        demo.setStatus(Demo.Status.UPLOADED);
+        demoDao.createDemo(demo);
+    }
 
-        List<InputPart> inPart = formParts.get("file");  
-        for (InputPart inputPart : inPart) {
-            try {
-                // Retrieve headers, read the Content-Disposition header to obtain the original name of the file
-                MultivaluedMap<String, String> headers = inputPart.getHeaders();
-                String[] contentDispositionHeader = headers.getFirst("Content-Disposition").split(";");
-                for (String name : contentDispositionHeader) {
-                    if ((name.trim().startsWith("filename"))) {
-                        String[] tmp = name.split("=");
-                        fileName = tmp[1].trim().replaceAll("\"", "");
-                    }
-                }
-                InputStream istream = inputPart.getBody(InputStream.class, null);
-                byte[] bytes = IOUtils.toByteArray(istream);
-                writeFile(bytes, fileName);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        demo.setTitle(fileName);
+    @PUT
+    @Path("/{title}/{artist}")
+    public void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title) {
+        Demo demo = new Demo();
+        demo.setTitle(title);
         demo.setArtist(artist);
         demo.setStatus(Demo.Status.UPLOADED);
         demoDao.createDemo(demo);
-    }*/
-
-    @DELETE
-    @Path("/demo/delete/{title}")
-    public void removeDemo(String title) {
-        demoDao.deleteDemo(demoDao.findDemo(title));
     }
 
-    private void writeFile(byte[] content, String filename) throws IOException {
-        File file = new File(filename);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-        FileOutputStream fop = new FileOutputStream(file);
-        fop.write(content);
-        fop.flush();
-        fop.close();
+    @PUT
+    @Path("/{title}/{artist}/{email}")
+    public void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
+            @PathParam("title") String title,
+            @PathParam("email") String email) {
+        Demo demo = new Demo();
+        demo.setArtist(artist);
+        demo.setTitle(title);
+        demo.setEmail(email);
+        demo.setStatus(Demo.Status.UPLOADED);
+        demoDao.createDemo(demo);
+    }
+    
+    @DELETE
+    @Path("/{title}")
+    public void removeDemo(@PathParam("title") String title) {
+        demoDao.deleteDemo(demoDao.findDemo(title));
     }
 }
