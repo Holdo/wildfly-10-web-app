@@ -15,7 +15,7 @@ sap.ui.define([
         onInit: function () {
             //Set model
             this.getView().setModel(new JSONModel({
-                name: "",
+                artist: "",
                 email: "",
                 title: "",
                 fileName: "",
@@ -59,7 +59,7 @@ sap.ui.define([
         },
         handleDemoButtonPress: function (oEvent) {
             if (
-                this.getView().byId("nameInput").getValueState() != "Success" &&
+                this.getView().byId("artistInput").getValueState() != "Success" &&
                 this.getView().byId("emailInput").getValueState() != "Success" &&
                 this.getView().byId("titleInput").getValueState() != "Success" &&
                 this.getView().byId("trackFileUploader").getValueState() != "Success") {

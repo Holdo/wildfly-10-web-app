@@ -14,13 +14,13 @@
                 <VBox alignItems="Center">
                     <form:SimpleForm title="Artist's input form" layout="ResponsiveGridLayout">
                         <Label text="Name" class="sapUiSmallMarginTop sapUiTinyMarginBottom"/>
-                        <Input id="nameInput"
+                        <Input id="artistInput"
                                class="sapUiSmallMarginBottom"
                                type="Text"
                                placeholder="Enter your name..."
                                valueStateText="Minimum 3 characters. Maximum 255."
                                value="{
-					                            path : '/name',
+					                            path : '/artist',
 					                            type : 'sap.ui.model.type.String',
 					                            constraints : {
 					                            	minLength: 3,
