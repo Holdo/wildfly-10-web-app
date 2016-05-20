@@ -20,8 +20,58 @@ sap.ui.define([
                 title: ""
             }));*/
 
-            var oView = this.getView();
+            this.refreshTable();
+        },
+        onExit: function () {
+            //Pls do not leave
+        },
+        handleTableRowDelete: function (oEvent) {
+            var sTrackTitle = oEvent.getParameters().listItem.getCells()[0].getText();
+            MessageToast.show("Table-row delete event fired!");
+            this.deleteTrack(sTrackTitle);
+        },
+        handleColumnPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Press event fired!");
+        },
+        handleColumnDetailPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Detail press event fired!");
+        },
+        onAddNewTrackButtonPressed: function (oEvent) {
+            window.location.href = "/artist/index.html";
+        },
+        deleteTrack: function (sTrackTitle) {
+            var that = this;
+            $.ajax({
+                url: "/rest/demo/" + sTrackTitle,
+                type: "DELETE",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    that.refreshTable();
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                    MessageBox.error(
+                        xhr.responseText,
+                        {
+                            title: "Error!",
+                            actions: [MessageBox.Action.OK]
+                        }
+                    );
+                    var messages = JSON.parse(xhr.responseText);
+                    console.log(messages);
+                },
+                complete: function (xhr, status) {
 
+                }
+            });
+        },
+        refreshTable: function () {
+            var oView = this.getView();
             $.ajax({
                 url: "/rest/demo/findAll",
                 type: "GET",
@@ -48,27 +98,6 @@ sap.ui.define([
 
                 }
             });
-        },
-        onExit: function () {
-            //Pls do not leave
-        },
-        handleTableRowDelete: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Table-row delete event fired!");
-        },
-        handleColumnPress: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Press event fired!");
-        },
-        handleColumnDetailPress: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Detail press event fired!");
-        },
-        onAddNewTrackButtonPressed: function (oEvent) {
-            window.location.href = "/artist/index.html";
         }
     });
 
