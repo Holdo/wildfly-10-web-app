@@ -48,10 +48,9 @@ public class DemoResourceImpl implements DemoResource {
         demo.setTitle(input.getString("title"));
         demo.setArtist(input.getString("artist"));
         demo.setEmail(input.getString("email"));
-        demo.setStatus(Demo.Status.UPLOADED);
-        String encodedTrack = input.getString("file");
-        byte[] decodedTrack = Base64.getDecoder().decode(encodedTrack);
-        demo.setTrack(decodedTrack);
+        demo.setStatus(Demo.Status.UPLOADED);        
+        demo.setTrack(Base64.getDecoder().decode(input.getString("file")));
+        demoDao.createDemo(demo);
     }
 
     @PUT
@@ -92,3 +91,4 @@ public class DemoResourceImpl implements DemoResource {
         demoDao.deleteDemo(demoDao.findDemo(title));
     }
 }
+
