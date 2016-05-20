@@ -13,13 +13,6 @@ sap.ui.define([
 
     var AdminInterfaceController = Controller.extend("admininterface.AdminInterface", {
         onInit: function () {
-            //Set model
-            /*this.getView().setModel(new JSONModel({
-                name: "",
-                email: "",
-                title: ""
-            }));*/
-
             this.refreshTable();
         },
         onExit: function () {
@@ -27,29 +20,13 @@ sap.ui.define([
         },
         handleTableRowDelete: function (oEvent) {
             var sTrackTitle = oEvent.getParameters().listItem.getCells()[0].getText();
-            MessageToast.show("Table-row delete event fired!");
-            this.deleteTrack(sTrackTitle);
-        },
-        handleColumnPress: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Press event fired!");
-        },
-        handleColumnDetailPress: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Detail press event fired!");
-        },
-        onAddNewTrackButtonPressed: function (oEvent) {
-            window.location.href = "/artist/index.html";
-        },
-        deleteTrack: function (sTrackTitle) {
             var that = this;
             $.ajax({
                 url: "/rest/demo/" + sTrackTitle,
                 type: "DELETE",
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
+                    MessageToast.show("Track deleted!");
                     that.refreshTable();
                 },
                 error: function (xhr, status) {
@@ -69,6 +46,19 @@ sap.ui.define([
 
                 }
             });
+        },
+        handleColumnPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Press event fired!");
+        },
+        handleColumnDetailPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Detail press event fired!");
+        },
+        onAddNewTrackButtonPressed: function (oEvent) {
+            window.location.href = "/artist/index.html";
         },
         refreshTable: function () {
             var oView = this.getView();
