@@ -1,11 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>WildFly</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+    <title>Admin</title>
+    <script src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+            id="sap-ui-bootstrap"
+            data-sap-ui-language="en"
+            data-sap-ui-libs="sap.m"
+            data-sap-ui-compatVersion="edge"
+            data-sap-ui-theme="sap_bluecrystal"
+            data-sap-ui-xx-bindingSyntax="complex"
+            data-sap-ui-resourceroots='{"RootFolder": "./"}'
+            data-sap-ui-preload="async">
+    </script>
+    <script>
+        sap.ui.localResources("admininterface");
+        sap.ui.getCore().attachInit(function() {
+            new sap.ui.core.ComponentContainer({
+                height : "99.68%", //workaround for Chrome scrollbar issue
+                name : "RootFolder.admininterface"
+            }).placeAt("content");
+        });
+    </script>
 </head>
-<body>
-<h1>Welcome Admin</h1>
-<hr/>
+<body class="sapUiBody" role="application">
+<div id="content">
+
+</div>
 </body>
 </html>

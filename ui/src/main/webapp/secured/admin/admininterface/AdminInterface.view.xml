@@ -1,0 +1,22 @@
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+           controllerName='admininterface.AdminInterface'>
+    <Page title="Admin Interface">
+        <content>
+            <Panel width="auto" class="sapUiSmallMargin">
+                <content>
+                    <VBox alignItems="Center" justifyContent="SpaceBetween">
+                        <Text text="Welcome to the Admin interface" class="sapMH4FontSize"/>
+                        <Text text="You can call the REST API from here" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </content>
+            </Panel>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
+                <ToolbarSpacer width="2em"/>
+            </Toolbar>
+        </footer>
+    </Page>
+</core:View>
