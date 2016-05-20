@@ -4,8 +4,10 @@ import java.util.List;
 import javax.inject.Inject;
 import model.Demo;
 import dao.DemoDAO;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Base64;
 
 /**
  *
@@ -39,7 +41,21 @@ public class DemoResourceImpl implements DemoResource {
     }
 
     @PUT
-    @Path("/{title}")
+    @Path("/upload") 
+    @Consumes("application/json")
+    public void addDemo(JsonObject input) {
+        Demo demo = new Demo();
+        demo.setTitle(input.getString("title"));
+        demo.setArtist(input.getString("artist"));
+        demo.setEmail(input.getString("email"));
+        demo.setStatus(Demo.Status.UPLOADED);
+        String encodedTrack = input.getString("file");
+        byte[] decodedTrack = Base64.getDecoder().decode(encodedTrack);
+        demo.setTrack(decodedTrack);
+    }
+
+    @PUT
+    @Path("/upload/{title}")
     public void addTitle(@PathParam("title") String title) {
         Demo demo = new Demo();
         demo.setTitle(title);
@@ -48,7 +64,7 @@ public class DemoResourceImpl implements DemoResource {
     }
 
     @PUT
-    @Path("/{title}/{artist}")
+    @Path("/upload/{title}/{artist}")
     public void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title) {
         Demo demo = new Demo();
         demo.setTitle(title);
@@ -58,7 +74,7 @@ public class DemoResourceImpl implements DemoResource {
     }
 
     @PUT
-    @Path("/{title}/{artist}/{email}")
+    @Path("/upload/{title}/{artist}/{email}")
     public void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
             @PathParam("title") String title,
             @PathParam("email") String email) {
@@ -69,7 +85,7 @@ public class DemoResourceImpl implements DemoResource {
         demo.setStatus(Demo.Status.UPLOADED);
         demoDao.createDemo(demo);
     }
-    
+
     @DELETE
     @Path("/{title}")
     public void removeDemo(@PathParam("title") String title) {

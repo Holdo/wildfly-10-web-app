@@ -1,6 +1,7 @@
 package cz.muni.fi.pv243.rest;
 
 import java.util.List;
+import javax.json.JsonObject;
 import javax.ws.rs.PathParam;
 import model.Demo;
 
@@ -16,14 +17,15 @@ public interface DemoResource {
 
     Demo findByTitle(@PathParam("title") String id);
 
-    public void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
+    void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
             @PathParam("title") String title,
             @PathParam("email") String email);
 
-    public void addTitle(@PathParam("title") String title);
+    void addTitle(@PathParam("title") String title);
 
-    public void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title);
+    void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title);
 
     void removeDemo(@PathParam("title") String title);
-
+    
+    void addDemo(JsonObject input);
 }
