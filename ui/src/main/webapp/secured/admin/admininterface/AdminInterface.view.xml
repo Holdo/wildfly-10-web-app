@@ -10,6 +10,58 @@
                     </VBox>
                 </content>
             </Panel>
+            <Table id="tracksTable" width="auto" class="sapUiResponsiveMargin"
+                   mode="Delete"
+                   delete="handleTableRowDelete"
+                   enableBusyIndicator="true"
+                   inset="false"
+                   items="{
+			                path: '/',
+			                sorter: {
+				                path: 'title'
+			                }
+		                }">
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Tracks on Server" level="H2"/>
+                        <ToolbarSpacer/>
+                        <Button icon="sap-icon://add" text="Add new track" press="onAddNewTrackButtonPressed" >
+                            <layoutData>
+                                <OverflowToolbarLayoutData priority="NeverOverflow" />
+                            </layoutData>
+                        </Button>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="12em">
+                        <Text text="Title"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="Artist"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="E-mail"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="Status"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="DetailAndActive"
+                                    press="handleColumnPress"
+                                    detailPress="handleColumnDetailPress">
+                        <cells>
+                            <Text text="{title}"/>
+                            <Text text="{artist}"/>
+                            <Text text="{email}"/>
+                            <Text text="{status}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
         </content>
         <footer>
             <Toolbar>

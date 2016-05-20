@@ -20,6 +20,7 @@ public class ServiceBean {
     private static Demo testDemo = new Demo();
 
     static {
+        testDemo.setEmail("test@email.cz");
         testDemo.setArtist("Interpreeteurer");
         testDemo.setStatus(UPLOADED);
         testDemo.setTitle("titelel");

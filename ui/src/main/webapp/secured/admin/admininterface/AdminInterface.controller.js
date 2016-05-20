@@ -14,25 +14,21 @@ sap.ui.define([
     var AdminInterfaceController = Controller.extend("admininterface.AdminInterface", {
         onInit: function () {
             //Set model
-            this.getView().setModel(new JSONModel({
+            /*this.getView().setModel(new JSONModel({
                 name: "",
                 email: "",
                 title: ""
-            }));
+            }));*/
+
+            var oView = this.getView();
 
             $.ajax({
                 url: "/rest/demo/findAll",
                 type: "GET",
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
-                    console.log(data);
-                    MessageBox.success(
-                        data[0],
-                        {
-                            title: "Success!",
-                            actions: [MessageBox.Action.OK]
-                        }
-                    );
+                    oView.setModel(new JSONModel(data));
+                    console.log("Received JSON:" + oView.getModel().getJSON());
 
                 },
                 error: function (xhr, status) {
@@ -55,6 +51,24 @@ sap.ui.define([
         },
         onExit: function () {
             //Pls do not leave
+        },
+        handleTableRowDelete: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Table-row delete event fired!");
+        },
+        handleColumnPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Press event fired!");
+        },
+        handleColumnDetailPress: function (oEvent) {
+            console.log(oEvent.getSource());
+            console.log(oEvent.getParameters());
+            MessageToast.show("Detail press event fired!");
+        },
+        onAddNewTrackButtonPressed: function (oEvent) {
+            window.location.href = "/artist/index.html";
         }
     });
 
