@@ -2,8 +2,8 @@ package cz.muni.fi.pv243.dao;
 
 import cz.muni.fi.pv243.exceptions.DemoNotExistsException;
 import cz.muni.fi.pv243.exceptions.TitleAlreadyExistsException;
-import infinispan.CacheContainerProvider;
-import model.Demo;
+import cz.muni.fi.pv243.infinispan.CacheContainerProvider;
+import cz.muni.fi.pv243.model.Demo;
 import org.infinispan.Cache;
 import org.infinispan.commons.api.BasicCache;
 import org.infinispan.query.Search;
