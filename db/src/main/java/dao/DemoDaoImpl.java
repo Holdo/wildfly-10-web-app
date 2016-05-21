@@ -1,5 +1,7 @@
 package dao;
 
+import exceptions.DemoNotExistsException;
+import exceptions.TitleAlreadyExistsException;
 import infinispan.CacheContainerProvider;
 import model.Demo;
 import org.infinispan.Cache;
@@ -49,17 +51,23 @@ public class DemoDaoImpl implements DemoDAO {
 
 	@Override
 	public void createDemo(Demo demo) {
+		if (demoCache.containsKey(encode(demo.getTitle()))) {
+            throw new TitleAlreadyExistsException(demo.getTitle());
+        }
 		demoCache.put(encode(demo.getTitle()), demo);
 	}
 
 	@Override
 	public void updateDemo(Demo demo) {
-		createDemo(demo);
+        if (!demoCache.containsKey(encode(demo.getTitle()))) {
+            throw new DemoNotExistsException(demo.getTitle());
+        }
+        demoCache.put(encode(demo.getTitle()), demo);
 	}
 
 	@Override
 	public void deleteDemo(Demo demo) {
-		demoCache.remove(encode(demo.getTitle()));
+        demoCache.remove(encode(demo.getTitle()));
 	}
 
 	@Override
