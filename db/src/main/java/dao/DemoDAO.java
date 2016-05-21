@@ -18,4 +18,5 @@ public interface DemoDAO {
     Demo findDemo(String title);
     List<Demo> findDemos(String interpret);
     List<Demo> findAll();
+    List<Demo> findAllNoMp3();
 }

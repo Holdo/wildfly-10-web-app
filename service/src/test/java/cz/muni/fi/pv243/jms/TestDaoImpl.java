@@ -15,36 +15,41 @@ import java.util.List;
 @ApplicationScoped
 public class TestDaoImpl implements DemoDAO {
 
-    @Getter
-    private Demo lastItem;
+	@Getter
+	private Demo lastItem;
 
-    @Override
-    public void createDemo(Demo demo) {
-        this.lastItem = demo;
-    }
+	@Override
+	public void createDemo(Demo demo) {
+		this.lastItem = demo;
+	}
 
-    @Override
-    public void updateDemo(Demo demo) {
+	@Override
+	public void updateDemo(Demo demo) {
 
-    }
+	}
 
-    @Override
-    public void deleteDemo(Demo demo) {
+	@Override
+	public void deleteDemo(Demo demo) {
 
-    }
+	}
 
-    @Override
-    public Demo findDemo(String title) {
-        return null;
-    }
+	@Override
+	public Demo findDemo(String title) {
+		return null;
+	}
 
-    @Override
-    public List<Demo> findDemos(String interpret) {
-        return null;
-    }
+	@Override
+	public List<Demo> findDemos(String interpret) {
+		return null;
+	}
 
-    @Override
-    public List<Demo> findAll() {
-        return null;
-    }
+	@Override
+	public List<Demo> findAll() {
+		return null;
+	}
+
+	@Override
+	public List<Demo> findAllNoMp3() {
+		return null;
+	}
 }

@@ -23,7 +23,7 @@ public class DemoResourceImpl implements DemoResource {
     @Path("/findAll")
     @Produces({MediaType.APPLICATION_JSON})
     public List<Demo> findAll() {
-        return demoDao.findAll();
+        return demoDao.findAllNoMp3();
     }
 
     @GET

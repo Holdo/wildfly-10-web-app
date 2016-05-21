@@ -101,36 +101,6 @@ public class Demo implements Serializable {
     }
 
     /**
-     * Class representing a comment to a demo for exchange of notes and information.
-     */
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public class Comment implements Serializable {
-        private static final long serialVersionUID = -6729363174359158134L;
-
-        /**
-         * Author of the comment
-         */
-        @NotNull
-        @Size(min=3, max=255)
-        private String author;
-
-        /**
-         * Text of a comment
-         */
-        @NotNull
-        @Size(min=3, max=1024)
-        private String comment;
-
-        /**
-         * Reactions to an comment
-         */
-        private List<Comment> reactions = new ArrayList<>();
-    }
-
-    /**
      * Status of a demo.
      */
     public enum Status {
