@@ -1,4 +1,4 @@
-package exceptions;
+package cz.muni.fi.pv243.exceptions;
 
 import javax.persistence.PersistenceException;
 
@@ -8,9 +8,9 @@ import javax.persistence.PersistenceException;
  * @author Marian Camak
  */
 public class DemoNotExistsException extends PersistenceException {
-    private static final long serialVersionUID = -3647315103467115868L;
+	private static final long serialVersionUID = -3647315103467115868L;
 
-    public DemoNotExistsException(String message) {
-        super(message);
-    }
+	public DemoNotExistsException(String message) {
+		super(message);
+	}
 }

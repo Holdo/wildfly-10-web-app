@@ -1,8 +1,8 @@
 package cz.muni.fi.pv243.jms;
 
-import dao.DemoDAO;
+import cz.muni.fi.pv243.dao.DemoDAO;
 import lombok.Getter;
-import model.Demo;
+import cz.muni.fi.pv243.model.Demo;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;

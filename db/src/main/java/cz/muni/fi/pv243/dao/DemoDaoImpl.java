@@ -1,7 +1,7 @@
-package dao;
+package cz.muni.fi.pv243.dao;
 
-import exceptions.DemoNotExistsException;
-import exceptions.TitleAlreadyExistsException;
+import cz.muni.fi.pv243.exceptions.DemoNotExistsException;
+import cz.muni.fi.pv243.exceptions.TitleAlreadyExistsException;
 import infinispan.CacheContainerProvider;
 import model.Demo;
 import org.infinispan.Cache;

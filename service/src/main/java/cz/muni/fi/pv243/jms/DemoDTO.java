@@ -1,12 +1,12 @@
 package cz.muni.fi.pv243.jms;
 
 import lombok.AllArgsConstructor;
-import model.Demo;
+import cz.muni.fi.pv243.model.Demo;
 
 import java.io.Serializable;
 import java.util.Collections;
 
-import static model.Demo.Status.UPLOADED;
+import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
 
 /**
  * @author 422718
@@ -14,29 +14,29 @@ import static model.Demo.Status.UPLOADED;
 @AllArgsConstructor
 public class DemoDTO implements Serializable {
 
-    /**
-     * ID, name of the demo
-     */
-    private String title;
+	/**
+	 * ID, name of the demo
+	 */
+	private String title;
 
-    /**
-     * Interpret of the demo.
-     */
-    private String artist;
+	/**
+	 * Interpret of the demo.
+	 */
+	private String artist;
 
-    /**
-     * Demo track.
-     */
-    private byte[] track;
+	/**
+	 * Demo track.
+	 */
+	private byte[] track;
 
-    public Demo toDemo() {
-        final Demo demo = new Demo();
-        demo.setTitle(this.title);
-        demo.setArtist(this.artist);
-        demo.setTrack(null); //TODO howto?!!!
-        demo.setStatus(UPLOADED);
-        demo.setComments(Collections.emptyList());
-        return demo;
-    }
+	public Demo toDemo() {
+		final Demo demo = new Demo();
+		demo.setTitle(this.title);
+		demo.setArtist(this.artist);
+		demo.setTrack(null); //TODO howto?!!!
+		demo.setStatus(UPLOADED);
+		demo.setComments(Collections.emptyList());
+		return demo;
+	}
 
 }

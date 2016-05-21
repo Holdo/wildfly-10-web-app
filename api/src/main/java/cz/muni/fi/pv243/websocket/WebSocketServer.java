@@ -12,23 +12,23 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-    
+	
 @ApplicationScoped
 @ServerEndpoint("/actions")
 public class WebSocketServer {
-    @OnOpen
-        public void open(Session session) {
-    }
+	@OnOpen
+		public void open(Session session) {
+	}
 
-    @OnClose
-        public void close(Session session) {
-    }
+	@OnClose
+		public void close(Session session) {
+	}
 
-    @OnError
-        public void onError(Throwable error) {
-    }
+	@OnError
+		public void onError(Throwable error) {
+	}
 
-    @OnMessage
-        public void handleMessage(String message, Session session) {
-    }
+	@OnMessage
+		public void handleMessage(String message, Session session) {
+	}
 }

@@ -15,15 +15,15 @@ import javax.jms.Queue;
 @Slf4j
 public class ArtistMessageSender {
 
-    @Inject
-    private JMSContext context;
+	@Inject
+	private JMSContext context;
 
-    @Resource(lookup = "java:jboss/exported/jms/ArtistQueue")
-    private Queue queue;
+	@Resource(lookup = "java:jboss/exported/jms/ArtistQueue")
+	private Queue queue;
 
-    public void sendCreateNew(DemoDTO demoDTO) {
-        this.context.createProducer().send(queue, demoDTO);
-        log.info("Message sent {}", demoDTO);
-    }
+	public void sendCreateNew(DemoDTO demoDTO) {
+		this.context.createProducer().send(queue, demoDTO);
+		log.info("Message sent {}", demoDTO);
+	}
 
 }

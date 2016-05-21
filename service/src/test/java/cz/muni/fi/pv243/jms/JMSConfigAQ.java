@@ -1,7 +1,7 @@
 package cz.muni.fi.pv243.jms;
 
-import dao.DemoDAO;
-import model.Demo;
+import cz.muni.fi.pv243.dao.DemoDAO;
+import cz.muni.fi.pv243.model.Demo;
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

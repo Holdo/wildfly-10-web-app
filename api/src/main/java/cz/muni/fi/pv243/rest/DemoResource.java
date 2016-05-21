@@ -2,8 +2,7 @@ package cz.muni.fi.pv243.rest;
 
 import java.util.List;
 import javax.json.JsonObject;
-import javax.ws.rs.PathParam;
-import model.Demo;
+import cz.muni.fi.pv243.model.Demo;
 
 /**
  *
@@ -11,21 +10,21 @@ import model.Demo;
  */
 public interface DemoResource {
 
-    List<Demo> findAll();
+	List<Demo> findAll();
 
-    List<Demo> findAllFromArtist(String artist);
+	List<Demo> findAllFromArtist(String artist);
 
-    Demo findByTitle(@PathParam("title") String id);
+	Demo findByTitle(String id);
 
-    void addTitleWithArtistAndEmail(@PathParam("artist") String artist,
-            @PathParam("title") String title,
-            @PathParam("email") String email);
+    String getMp3LinkByTitle(String title);
 
-    void addTitle(@PathParam("title") String title);
+	void addTitleWithArtistAndEmail(String artist, String title, String email);
 
-    void addTitleWithArtist(@PathParam("artist") String artist, @PathParam("title") String title);
+	void addTitle(String title);
 
-    void removeDemo(@PathParam("title") String title);
-    
-    void addDemo(JsonObject input);
+	void addTitleWithArtist(String artist, String title);
+
+	void removeDemo(String title);
+	
+	void addDemo(JsonObject input);
 }

@@ -1,6 +1,6 @@
-package infinispan;
+package cz.muni.fi.pv243.infinispan;
 
-import dao.DemoDaoImpl;
+import cz.muni.fi.pv243.dao.DemoDaoImpl;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
@@ -28,33 +28,33 @@ import java.util.logging.Logger;
 @Listener
 public class CacheOperationLogger {
 
-    private final Logger log = Logger.getLogger(this.getClass().getName());
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
-    @Inject
-    private CacheContainerProvider provider;
+	@Inject
+	private CacheContainerProvider provider;
 
-//    @PostConstruct
-    public void init() {
-        ((DefaultCacheManager) provider.getCacheContainer()).getCache(DemoDaoImpl.DEMO_CACHE_NAME).addListener(this);
-    }
+//	@PostConstruct
+	public void init() {
+		((DefaultCacheManager) provider.getCacheContainer()).getCache(DemoDaoImpl.DEMO_CACHE_NAME).addListener(this);
+	}
 
-    @CacheEntryCreated
-    public void logCacheEntry(CacheEntryCreatedEvent e) {
-        log.log(Level.INFO, "Entry " + e.getValue() + " created. ");
-    }
+	@CacheEntryCreated
+	public void logCacheEntry(CacheEntryCreatedEvent e) {
+		log.log(Level.INFO, "Entry " + e.getValue() + " created. ");
+	}
 
-    @CacheEntryModified
-    public void logCacheEntry(CacheEntryModifiedEvent e) {
-        log.log(Level.INFO, "Entry " + e.getValue() + " modified. ");
-    }
+	@CacheEntryModified
+	public void logCacheEntry(CacheEntryModifiedEvent e) {
+		log.log(Level.INFO, "Entry " + e.getValue() + " modified. ");
+	}
 
-    @CacheEntryRemoved
-    public void logCacheEntry(CacheEntryRemovedEvent e) {
-        log.log(Level.INFO, "Entry " + e.getValue() + " removed. ");
-    }
+	@CacheEntryRemoved
+	public void logCacheEntry(CacheEntryRemovedEvent e) {
+		log.log(Level.INFO, "Entry " + e.getValue() + " removed. ");
+	}
 
-    @CacheEntryVisited
-    public void logCacheEntry(CacheEntryVisitedEvent e) {
-        log.log(Level.INFO, "Entry " + e.getValue() + " visited. ");
-    }
+	@CacheEntryVisited
+	public void logCacheEntry(CacheEntryVisitedEvent e) {
+		log.log(Level.INFO, "Entry " + e.getValue() + " visited. ");
+	}
 }

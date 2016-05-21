@@ -1,4 +1,4 @@
-package model;
+package cz.muni.fi.pv243.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,6 +1,6 @@
-package session;
+package cz.muni.fi.pv243.session;
 
-import model.Demo.Status;
+import cz.muni.fi.pv243.model.Demo.Status;
 
 import javax.enterprise.inject.Produces;
 import javax.inject.Named;
@@ -10,9 +10,9 @@ import javax.inject.Named;
  */
 public class StatusManager {
 
-    @Produces
-    @Named
-    public Status[] getStatuses() {
-        return Status.values();
-    }
+	@Produces
+	@Named
+	public Status[] getStatuses() {
+		return Status.values();
+	}
 }

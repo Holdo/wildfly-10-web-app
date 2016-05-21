@@ -1,11 +1,11 @@
 package cz.muni.fi.pv243.jms;
 
-import dao.DemoDAO;
+import cz.muni.fi.pv243.dao.DemoDAO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import model.Comment;
-import model.Demo;
+import cz.muni.fi.pv243.model.Comment;
+import cz.muni.fi.pv243.model.Demo;
 
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-import static model.Demo.Status.UPLOADED;
+import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
 
 @Slf4j
 @Getter

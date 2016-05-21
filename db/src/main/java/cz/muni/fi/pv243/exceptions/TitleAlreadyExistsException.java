@@ -1,4 +1,4 @@
-package exceptions;
+package cz.muni.fi.pv243.exceptions;
 
 import javax.persistence.PersistenceException;
 
@@ -8,9 +8,9 @@ import javax.persistence.PersistenceException;
  * @author Marian Camak
  */
 public class TitleAlreadyExistsException extends PersistenceException {
-    private static final long serialVersionUID = 8392856899912125522L;
+	private static final long serialVersionUID = 8392856899912125522L;
 
-    public TitleAlreadyExistsException(String message) {
-        super(message);
-    }
+	public TitleAlreadyExistsException(String message) {
+		super(message);
+	}
 }
