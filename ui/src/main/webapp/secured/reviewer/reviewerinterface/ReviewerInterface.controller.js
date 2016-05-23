@@ -32,7 +32,6 @@ sap.ui.define([
                 success: function (data, textStatus, jqXHR) {
                     oView.setModel(new JSONModel(data));
                     console.log("Received JSON:" + oView.getModel().getJSON());
-
                 },
                 error: function (xhr, status) {
                     console.log(xhr);

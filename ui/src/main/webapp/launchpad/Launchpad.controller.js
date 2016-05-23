@@ -40,10 +40,10 @@ sap.ui.define([
                     window.location.href = "/artist/index.html";
                     break;
                 case "Reviewer":
-                    window.location.href = "/secured/reviewer/index.html";
+                    window.location.href = "/secured/reviewer/";
                     break;
                 case "Admin":
-                    window.location.href = "/secured/admin/index.html";
+                    window.location.href = "/secured/admin/";
                     break;
                 default:
                     break;

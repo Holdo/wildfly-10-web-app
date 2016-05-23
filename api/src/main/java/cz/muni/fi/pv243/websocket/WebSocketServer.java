@@ -30,75 +30,75 @@ import javax.json.JsonReader;
 @ServerEndpoint("/comment")
 public class WebSocketServer {
 
-    @Inject
-    private DemoDAO demoDao;
+	@Inject
+	private DemoDAO demoDao;
 
-    Map<String, List<Session>> rooms = new HashMap<>();
-    private Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	private Map<String, List<Session>> rooms = new HashMap<>();
+	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @OnOpen
-    public void open(Session session) {
-    }
+	@OnOpen
+	public void open(Session session) {
+	}
 
-    @OnClose
-    public void close(Session session) {
-        removeSession(session);
-    }
+	@OnClose
+	public void close(Session session) {
+		removeSession(session);
+	}
 
-    @OnError
-    public void onError(Throwable error) {
-        log.info("Error: " + error.getMessage());
-    }
+	@OnError
+	public void onError(Throwable error) {
+		log.info("Error: " + error.getMessage());
+	}
 
-    @OnMessage
-    public void handleMessage(final Session session, final String message) {
-        JsonObject messageJson;
-        try (JsonReader jsonReader = Json.createReader(new StringReader(message))) {
-            messageJson = jsonReader.readObject();
-        }
-        Comment comment = new Comment();
-        comment.setAuthor(messageJson.getString("author"));
-        comment.setComment(messageJson.getString("comment"));
-        addCommentToDemo(messageJson.getString("title"), comment);
+	@OnMessage
+	public void handleMessage(final Session session, final String message) {
+		JsonObject messageJson;
+		try (JsonReader jsonReader = Json.createReader(new StringReader(message))) {
+			messageJson = jsonReader.readObject();
+		}
+		Comment comment = new Comment();
+		comment.setAuthor(messageJson.getString("author"));
+		comment.setComment(messageJson.getString("comment"));
+		addCommentToDemo(messageJson.getString("title"), comment);
 
-        List<Session> sessions = rooms.get(messageJson.getString("title"));
-        JsonObject notification = Json.createObjectBuilder()
-                .add("title", messageJson.getString("title"))
-                .add("author", messageJson.getString("author"))
-                .add("comment", messageJson.getString("comment"))
-                .build();
-        sessions.stream().forEach((sessionForTitle) -> {
-            sendToSession(sessionForTitle, notification);
-        });
-    }
+		List<Session> sessions = rooms.get(messageJson.getString("title"));
+		JsonObject notification = Json.createObjectBuilder()
+				.add("title", messageJson.getString("title"))
+				.add("author", messageJson.getString("author"))
+				.add("comment", messageJson.getString("comment"))
+				.build();
+		sessions.stream().forEach((sessionForTitle) -> {
+			sendToSession(sessionForTitle, notification);
+		});
+	}
 
-    private void removeSession(Session session) {
-        rooms.keySet().stream().map((title)
-                -> rooms.get(title)).filter((sessionsOpenedForTitle)
-                -> (sessionsOpenedForTitle != null))
-                .filter((sessionsOpenedForTitle)
-                        -> (sessionsOpenedForTitle.contains(session)))
-                .forEach((sessionsOpenedForTitle) -> {
-                    sessionsOpenedForTitle.remove(session);
-                });
-    }
+	private void removeSession(Session session) {
+		rooms.keySet().stream().map((title)
+				-> rooms.get(title)).filter((sessionsOpenedForTitle)
+				-> (sessionsOpenedForTitle != null))
+				.filter((sessionsOpenedForTitle)
+						-> (sessionsOpenedForTitle.contains(session)))
+				.forEach((sessionsOpenedForTitle) -> {
+					sessionsOpenedForTitle.remove(session);
+				});
+	}
 
-    private void sendToSession(Session session, JsonObject message) {
-        if (session.isOpen()) {
-            try {
-                session.getBasicRemote().sendText(message.toString());
-            } catch (IOException ex) {
-                removeSession(session);
-                log.info("Error: " + ex.getMessage());
-            }
-        }
-    }
+	private void sendToSession(Session session, JsonObject message) {
+		if (session.isOpen()) {
+			try {
+				session.getBasicRemote().sendText(message.toString());
+			} catch (IOException ex) {
+				removeSession(session);
+				log.info("Error: " + ex.getMessage());
+			}
+		}
+	}
 
-    private void addCommentToDemo(String title, Comment comment) {
-        Demo demo = demoDao.findDemo(title);
-        List<Comment> comments = demo.getComments();
-        comments.add(comment);
-        demo.setComments(comments);
-        demoDao.updateDemo(demo);
-    }
+	private void addCommentToDemo(String title, Comment comment) {
+		Demo demo = demoDao.findDemo(title);
+		List<Comment> comments = demo.getComments();
+		comments.add(comment);
+		demo.setComments(comments);
+		demoDao.updateDemo(demo);
+	}
 }
