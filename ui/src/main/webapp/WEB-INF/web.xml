@@ -38,6 +38,16 @@
             <role-name>reviewer</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ws-security</web-resource-name>
+            <url-pattern>/websocket/*</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>reviewer</role-name>
+        </auth-constraint>
+    </security-constraint>
 
     <session-config>
         <session-timeout>10</session-timeout> <!-- minutes -->
