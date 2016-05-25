@@ -1,55 +1,67 @@
-<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form"
+           xmlns:u="sap.ui.unified"
            controllerName='reviewerinterface.ReviewerInterface'>
-    <Panel width="auto" class="sapUiSmallMargin">
+    <Page title="Reviewer Interface">
         <content>
-            <VBox alignItems="Center" justifyContent="SpaceBetween">
-                <Text text="Welcome to the Track Review app" class="sapMH4FontSize"/>
-                <Text text="You can browse currently uploaded tracks in here" class="sapUiTinyMarginTop"/>
-            </VBox>
-        </content>
-    </Panel>
-    <Table id="tracksTable" width="auto" class="sapUiResponsiveMargin"
-           enableBusyIndicator="true"
-           inset="false"
-           items="{
+            <Panel width="auto" class="sapUiSmallMargin">
+                <content>
+                    <VBox alignItems="Center" justifyContent="SpaceBetween">
+                        <Text text="Welcome to the Track Review app" class="sapMH4FontSize"/>
+                        <Text text="You can browse currently uploaded tracks in here" class="sapUiTinyMarginTop"/>
+                    </VBox>
+                </content>
+            </Panel>
+            <Table id="tracksTable" width="auto" class="sapUiResponsiveMargin"
+                   enableBusyIndicator="true"
+                   inset="false"
+                   items="{
 			                path: '/',
 			                sorter: {
 				                path: 'title'
 			                }
 		                }">
-        <headerToolbar>
-            <OverflowToolbar>
-                <Title text="Current tracks" level="H2"/>
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title text="Current tracks" level="H2"/>
+                        <ToolbarSpacer/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="12em">
+                        <Text text="Title"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="Artist"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="E-mail"/>
+                    </Column>
+                    <Column minScreenWidth="Tablet"
+                            demandPopin="true">
+                        <Text text="Status"/>
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active"
+                                    press="handleColumnPress">
+                        <cells>
+                            <Text text="{title}"/>
+                            <Text text="{artist}"/>
+                            <Text text="{email}"/>
+                            <Text text="{status}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <footer>
+            <Toolbar>
                 <ToolbarSpacer/>
-            </OverflowToolbar>
-        </headerToolbar>
-        <columns>
-            <Column width="12em">
-                <Text text="Title"/>
-            </Column>
-            <Column minScreenWidth="Tablet"
-                    demandPopin="true">
-                <Text text="Artist"/>
-            </Column>
-            <Column minScreenWidth="Tablet"
-                    demandPopin="true">
-                <Text text="E-mail"/>
-            </Column>
-            <Column minScreenWidth="Tablet"
-                    demandPopin="true">
-                <Text text="Status"/>
-            </Column>
-        </columns>
-        <items>
-            <ColumnListItem type="Active"
-                            press="handleColumnPress">
-                <cells>
-                    <Text text="{title}"/>
-                    <Text text="{artist}"/>
-                    <Text text="{email}"/>
-                    <Text text="{status}"/>
-                </cells>
-            </ColumnListItem>
-        </items>
-    </Table>
+                <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
+                <ToolbarSpacer width="2em"/>
+            </Toolbar>
+        </footer>
+    </Page>
 </core:View>

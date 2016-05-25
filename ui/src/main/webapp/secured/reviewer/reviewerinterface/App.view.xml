@@ -18,7 +18,7 @@
                     tooltip="Back"
                     icon="sap-icon://nav-back"
                     visible="false"
-                    press="handlePressBack" />
+                    press="handlePressBack"/>
         </u:headItems>
         <u:headEndItems>
             <u:ShellHeadItem
@@ -34,19 +34,8 @@
         </u:user>
         <u:paneContent>
         </u:paneContent>
-        <Page title="Reviewer Interface">
-            <content>
-                <App id="rootControl">
-                    <!-- VIEWS -->
-                </App>
-            </content>
-            <footer>
-                <Toolbar>
-                    <ToolbarSpacer/>
-                    <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
-                    <ToolbarSpacer width="2em"/>
-                </Toolbar>
-            </footer>
-        </Page>
+        <App id="rootControl">
+            <!-- VIEWS -->
+        </App>
     </u:Shell>
 </View>

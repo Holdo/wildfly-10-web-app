@@ -14,12 +14,9 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>REST-Reviewer</web-resource-name>
+            <web-resource-name>REST-DEMO-DELETE</web-resource-name>
             <description>rest security constraints</description>
             <url-pattern>/rest/demo/*</url-pattern>
-            <http-method>GET</http-method>
-            <http-method>POST</http-method>
-            <http-method>PUT</http-method>
             <http-method>DELETE</http-method>
         </web-resource-collection>
         <auth-constraint>
@@ -28,15 +25,23 @@
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>REST-Reviewer</web-resource-name>
+            <web-resource-name>REST-DEMO-GET-POST</web-resource-name>
             <url-pattern>/rest/demo/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>PUT</http-method>
         </web-resource-collection>
         <auth-constraint>
+            <role-name>admin</role-name>
             <role-name>reviewer</role-name>
         </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>REST-DEMO-UPLOAD-PUT</web-resource-name>
+            <url-pattern>/rest/demo/upload</url-pattern>
+            <http-method>PUT</http-method>
+        </web-resource-collection>
     </security-constraint>
     <security-constraint>
         <web-resource-collection>

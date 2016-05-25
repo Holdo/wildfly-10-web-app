@@ -13,22 +13,29 @@ sap.ui.define([
 
     var ReviewerInterfaceController = Controller.extend("reviewerinterface.ReviewerInterface", {
         onInit: function () {
-            this.getView().setModel(new JSONModel(
+            /*this.getView().setModel(new JSONModel(
                 [
                     {title : "Test Title", artist : "TestArtist", email : "test@test.com", status : "UPLOADED"},
                     {title : "Test2", artist : "TestArtist2", email : "test2@test.com", status : "UPLOADED"}
                 ]
-            ));
-            //this.refreshTable();
+            ));*/
+            this.refreshTable();
         },
         onExit: function () {
             //Pls do not leave
         },
         handleColumnPress: function (oEvent) {
             var aCells = oEvent.getSource().getCells();
-            var oJSONModel = new JSONModel({title : aCells[0].getText(), artist : aCells[1].getText(), email : aCells[2].getText(), status : aCells[3].getText()});
-            sap.ui.getCore().AppContext.oTrackJSONModel = oJSONModel;
+            sap.ui.getCore().AppContext.oTrackJSONModel = new JSONModel({
+                title: aCells[0].getText(),
+                artist: aCells[1].getText(),
+                email: aCells[2].getText(),
+                status: aCells[3].getText()
+            });
             this.getOwnerComponent().getTargets().display("trackView");
+            if (sap.ui.getCore().AppContext.bTrackViewInitialized) {
+                sap.ui.getCore().AppContext.currentTrackController.onInit();
+            }
         },
         refreshTable: function () {
             var oView = this.getView();

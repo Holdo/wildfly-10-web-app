@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.inject.Model;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
@@ -32,7 +32,7 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
  * @author Marian Camak on 4. 5. 2016.
  * @see DemoDAO
  */
-@Model
+@ApplicationScoped
 @Transactional(REQUIRES_NEW)
 public class DemoDaoImpl implements DemoDAO {
 

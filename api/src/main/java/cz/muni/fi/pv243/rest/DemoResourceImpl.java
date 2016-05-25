@@ -5,7 +5,6 @@ import javax.inject.Inject;
 
 import cz.muni.fi.pv243.jms.service.DemoService;
 import cz.muni.fi.pv243.model.Demo;
-import cz.muni.fi.pv243.dao.DemoDAO;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -19,30 +18,27 @@ import java.util.Base64;
 public class DemoResourceImpl implements DemoResource {
 
 	@Inject
-	private DemoDAO demoDao;
-
-	@Inject
 	private DemoService demoService;
 
 	@GET
 	@Path("/findAll")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Demo> findAll() {
-		return demoDao.findAllNoMp3();
+		return demoService.findAllNoMp3();
 	}
 
 	@GET
 	@Path("/artist/{artist}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public List<Demo> findAllFromArtist(@PathParam("artist") String artist) {
-		return demoDao.findDemos(artist);
+		return demoService.findDemos(artist);
 	}
 
 	@GET
 	@Path("/title/{title}")
 	@Produces({MediaType.APPLICATION_JSON})
 	public Demo findByTitle(@PathParam("title") String title) {
-		return demoDao.findDemo(title);
+		return demoService.findDemo(title);
 	}
 
 	@GET
@@ -62,7 +58,7 @@ public class DemoResourceImpl implements DemoResource {
 		demo.setEmail(input.getString("email"));
 		demo.setStatus(Demo.Status.UPLOADED);		
 		demo.setTrack(Base64.getDecoder().decode(input.getString("file")));
-		demoDao.createDemo(demo);
+		demoService.createDemo(demo);
 	}
 
 	@PUT
@@ -71,7 +67,7 @@ public class DemoResourceImpl implements DemoResource {
 		Demo demo = new Demo();
 		demo.setTitle(title);
 		demo.setStatus(Demo.Status.UPLOADED);
-		demoDao.createDemo(demo);
+		demoService.createDemo(demo);
 	}
 
 	@PUT
@@ -81,7 +77,7 @@ public class DemoResourceImpl implements DemoResource {
 		demo.setTitle(title);
 		demo.setArtist(artist);
 		demo.setStatus(Demo.Status.UPLOADED);
-		demoDao.createDemo(demo);
+		demoService.createDemo(demo);
 	}
 
 	@PUT
@@ -94,13 +90,13 @@ public class DemoResourceImpl implements DemoResource {
 		demo.setTitle(title);
 		demo.setEmail(email);
 		demo.setStatus(Demo.Status.UPLOADED);
-		demoDao.createDemo(demo);
+		demoService.createDemo(demo);
 	}
 
 	@DELETE
 	@Path("/{title}")
 	public void removeDemo(@PathParam("title") String title) {
-		demoDao.deleteDemo(demoDao.findDemo(title));
+		demoService.deleteDemo(demoService.findDemo(title));
 	}
 }
 

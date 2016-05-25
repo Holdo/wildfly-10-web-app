@@ -8,8 +8,9 @@ sap.ui.define([
             if (sUsername == "") sUsername = "anonymous";
             this.getView().byId("ShellHeadUserItem").setUsername(sUsername);
             sap.ui.getCore().AppContext = {};
-            sap.ui.getCore().AppContext.shellBackButton = this.getView().byId("shellBackButton");
-            sap.ui.getCore().AppContext.username = sUsername;
+            sap.ui.getCore().AppContext.oShellBackButton = this.getView().byId("shellBackButton");
+            sap.ui.getCore().AppContext.sUsername = sUsername;
+            sap.ui.getCore().AppContext.bTrackViewInitialized = false;
         },
         handleLogoffPress : function () {
             window.location.href = "/secured/logout";
@@ -18,10 +19,8 @@ sap.ui.define([
             window.location.href = "/";
         },
         handlePressBack : function (oEvent) {
-            this.getOwnerComponent().getTargets().display("mainView");
             oEvent.getSource().setVisible(false);
-            console.log(sap.ui.getCore().AppContext.currentTrackView);
-            sap.ui.getCore().AppContext.currentTrackView.destroy();
+            this.getOwnerComponent().getTargets().display("mainView");
         }
     });
     return AppController;

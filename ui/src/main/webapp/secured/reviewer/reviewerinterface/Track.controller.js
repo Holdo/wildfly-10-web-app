@@ -11,34 +11,56 @@ sap.ui.define([
 ], function (jQuery, Controller, Fragment, Filter, JSONModel, MessageToast, MessageBox, SimpleType, ShellHeadItem) {
     "use strict";
 
+    var sLastTrackTitle = null;
+    var AppContext = sap.ui.getCore().AppContext;
+
     var TrackController = Controller.extend("reviewerinterface.Track", {
         onInit: function () {
-            sap.ui.getCore().AppContext.currentTrackView = this.getView();
-            this.getView().setModel(sap.ui.getCore().AppContext.oTrackJSONModel, "mp3Info");
-            this.getView().setModel(new JSONModel([
-                {author : "author", comment : "LOOOL"},
-                {author : "author2", comment : "MEGA LOOOOOOOOOOOOOOOOOL :)"}
-            ]));
-            console.log(this.getView().getModel("mp3Info").getJSON());
-            sap.ui.getCore().AppContext.shellBackButton.setVisible(true);
-            var wsURI = "ws://" + document.location.host + "/websocket/" + encodeURI(this.getView().getModel("mp3Info").getProperty("/title"));
-            console.log(wsURI);
-            /*this.socket = new WebSocket(wsURI);
-            this.socket.onopen = function() {
-                console.log("Websocket has been opened.");
-            };
-            this.socket.onmessage = function(oEvent) {
-                console.log("Received WS message: " + oEvent.data);
-            };*/
+            var sRequestedTrackTitle = AppContext.oTrackJSONModel.getProperty("/title");
+            if (sLastTrackTitle === null || sLastTrackTitle != sRequestedTrackTitle) {
+                if (sLastTrackTitle != sRequestedTrackTitle) {
+                    if (this.socket != undefined && this.socket.readyState != 3) this.socket.close();
+                }
+                sLastTrackTitle = sRequestedTrackTitle;
+                AppContext.currentTrackController = this;
+                this.getView().setModel(AppContext.oTrackJSONModel, "mp3Info");
+                /*this.getView().setModel(new JSONModel([
+                    {author: "author", comment: "LOOOL"},
+                    {author: "author2", comment: "MEGA LOOOOOOOOOOOOOOOOOL :)"}
+                ]));*/
+                this.getView().setModel(new JSONModel());
+                var oFeedJSONModel = this.getView().getModel();
+                var sFeedJSON = "[]";
+                var wsURI = "ws://" + document.location.host + "/websocket/" + encodeURI(this.getView().getModel("mp3Info").getProperty("/title"));
+                console.log(wsURI);
+                this.socket = new WebSocket(wsURI);
+                this.socket.onopen = function () {
+                    console.log("Websocket has been opened.");
+                };
+                this.socket.onmessage = function (oEvent) {
+                    var sReceivedJSON = oEvent.data;
+                    console.log("Received message from WS: " + sReceivedJSON);
+                    if (sFeedJSON != "[]") sReceivedJSON = sReceivedJSON + ", ";
+                    sFeedJSON = sFeedJSON.substring(1, sFeedJSON.length);
+                    sFeedJSON = "[" + sReceivedJSON + sFeedJSON;
+                    oFeedJSONModel.setJSON(sFeedJSON);
+                };
+            }
+            AppContext.oShellBackButton.setVisible(true);
+            AppContext.bTrackViewInitialized = true;
         },
         onExit: function () {
-            this.socket.close();
+            if (this.socket != undefined && this.socket.readyState != 3) this.socket.close();
         },
         onFeedInputPost: function (oEvent) {
-            var sText = oEvent.getParameter("value");
-            //console.log(sap.ui.getCore().byId("RootFolder.reviewerinterface.App"));
-            console.log(sap.ui.getCore().AppContext.username);
-            console.log(sText);
+            var oJSON = {
+                title : sLastTrackTitle,
+                author : AppContext.sUsername,
+                comment : oEvent.getParameter("value")
+            };
+            var sJSON = JSON.stringify(oJSON);
+            console.log("Sending to WS: " + sJSON);
+            this.socket.send(sJSON);
         }
     });
 
