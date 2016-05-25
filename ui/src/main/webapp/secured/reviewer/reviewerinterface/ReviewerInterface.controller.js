@@ -13,15 +13,22 @@ sap.ui.define([
 
     var ReviewerInterfaceController = Controller.extend("reviewerinterface.ReviewerInterface", {
         onInit: function () {
-            this.refreshTable();
+            this.getView().setModel(new JSONModel(
+                [
+                    {title : "Test Title", artist : "TestArtist", email : "test@test.com", status : "UPLOADED"},
+                    {title : "Test2", artist : "TestArtist2", email : "test2@test.com", status : "UPLOADED"}
+                ]
+            ));
+            //this.refreshTable();
         },
         onExit: function () {
             //Pls do not leave
         },
         handleColumnPress: function (oEvent) {
-            console.log(oEvent.getSource());
-            console.log(oEvent.getParameters());
-            MessageToast.show("Press event fired!");
+            var aCells = oEvent.getSource().getCells();
+            var oJSONModel = new JSONModel({title : aCells[0].getText(), artist : aCells[1].getText(), email : aCells[2].getText(), status : aCells[3].getText()});
+            sap.ui.getCore().AppContext.oTrackJSONModel = oJSONModel;
+            this.getOwnerComponent().getTargets().display("trackView");
         },
         refreshTable: function () {
             var oView = this.getView();

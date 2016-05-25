@@ -45,6 +45,7 @@
             <http-method>GET</http-method>
         </web-resource-collection>
         <auth-constraint>
+            <role-name>admin</role-name>
             <role-name>reviewer</role-name>
         </auth-constraint>
     </security-constraint>

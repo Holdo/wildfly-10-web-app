@@ -517,10 +517,4 @@
             <remote-destination host="localhost" port="25"/>
         </outbound-socket-binding>
     </socket-binding-group>
-
-    <deployments>
-        <deployment name="ui-1.0-SNAPSHOT.war" runtime-name="ui-1.0-SNAPSHOT.war">
-            <content sha1="0fb2fc8f97a147b745454ec46e48037a3fa9b474"/>
-        </deployment>
-    </deployments>
 </server>

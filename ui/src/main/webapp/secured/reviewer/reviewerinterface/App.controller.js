@@ -5,13 +5,23 @@ sap.ui.define([
     var AppController =  Controller.extend("reviewerinterface.App", {
         onInit : function () {
             var sUsername = getCookie("username");
-            if (sUsername != "") this.getView().byId("ShellHeadUserItem").setUsername(sUsername);
+            if (sUsername == "") sUsername = "anonymous";
+            this.getView().byId("ShellHeadUserItem").setUsername(sUsername);
+            sap.ui.getCore().AppContext = {};
+            sap.ui.getCore().AppContext.shellBackButton = this.getView().byId("shellBackButton");
+            sap.ui.getCore().AppContext.username = sUsername;
         },
         handleLogoffPress : function () {
             window.location.href = "/secured/logout";
         },
         handlePressHome : function () {
             window.location.href = "/";
+        },
+        handlePressBack : function (oEvent) {
+            this.getOwnerComponent().getTargets().display("mainView");
+            oEvent.getSource().setVisible(false);
+            console.log(sap.ui.getCore().AppContext.currentTrackView);
+            sap.ui.getCore().AppContext.currentTrackView.destroy();
         }
     });
     return AppController;

@@ -1,0 +1,27 @@
+<core:View xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:u="sap.ui.unified"
+           controllerName='reviewerinterface.Track'>
+    <Panel width="auto" class="sapUiSmallMargin">
+        <content>
+            <VBox alignItems="Center" justifyContent="SpaceBetween">
+                <Text text="{mp3Info>/title}" class="sapMH4FontSize"/>
+                <Text text="by: {mp3Info>/artist}, {mp3Info>/email}" class="sapUiTinyMarginTop"/>
+            </VBox>
+        </content>
+    </Panel>
+    <VBox alignItems="Center">
+        <core:HTML content="&lt;p&gt;HTML content&lt;/p&gt;"/>
+        <FeedInput class="sapUiSmallMarginTopBottom"
+                   post="onFeedInputPost"
+                   icon="sap-icon://person-placeholder"/>
+        <List showSeparators="Inner"
+              items="{/}" >
+            <FeedListItem sender="{author}"
+                          icon="sap-icon://person-placeholder"
+                          senderPress="onSenderPress"
+                          iconPress="onIconPress"
+                          iconDensityAware="false"
+                          timestamp="{date}"
+                          text="{comment}"/>
+        </List>
+    </VBox>
+</core:View>

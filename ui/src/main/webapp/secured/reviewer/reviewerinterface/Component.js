@@ -12,16 +12,20 @@ sap.ui.define( ["sap/ui/core/UIComponent"], function (UIComponent) {
                     viewType: "XML"
                 },
                 targets: {
-                    page1: {
+                    mainView: {
                         viewName: "ReviewerInterface",
                         viewLevel: 0
+                    },
+                    trackView: {
+                        viewName: "Track",
+                        viewLevel: 1
                     }
                 }
             }
         },
         init : function () {
             UIComponent.prototype.init.apply(this, arguments);
-            this.getTargets().display("page1");
+            this.getTargets().display("mainView");
         }
     });
 }, /* bExport= */ true);

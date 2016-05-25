@@ -28,8 +28,19 @@
         </u:user>
         <u:paneContent>
         </u:paneContent>
-        <App id="rootControl">
-
-        </App>
+        <Page title="Admin Interface">
+            <content>
+                <App id="rootControl">
+                    <!-- VIEWS -->
+                </App>
+            </content>
+            <footer>
+                <Toolbar>
+                    <ToolbarSpacer/>
+                    <Text text="Čamák, Holič, Válka, Vilkoláková --- PV243 2016"/>
+                    <ToolbarSpacer width="2em"/>
+                </Toolbar>
+            </footer>
+        </Page>
     </u:Shell>
 </View>
