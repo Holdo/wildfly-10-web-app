@@ -52,7 +52,7 @@ public class CacheContainerProvider {
 			Configuration demoCacheConfig = new ConfigurationBuilder()
 					.jmxStatistics().enable()
 					.clustering()
-						.cacheMode(CacheMode.DIST_SYNC)
+						.cacheMode(CacheMode.REPL_SYNC)
 						.sync()
 					.transaction()
 						.transactionMode(TransactionMode.TRANSACTIONAL)

@@ -462,7 +462,7 @@
             </servlet-container>
             <handlers>
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
-                <file name="mp3-resources" path="${jboss.home.dir}/mp3-resources" case-sensitive="true"/>
+                <file name="mp3-resources" path="${jboss.home.dir}/mp3-resources"/>
             </handlers>
             <filters>
                 <response-header name="server-header" header-name="Server" header-value="WildFly/10"/>
