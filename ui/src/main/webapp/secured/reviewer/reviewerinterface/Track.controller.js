@@ -16,6 +16,7 @@ sap.ui.define([
 
     var TrackController = Controller.extend("reviewerinterface.Track", {
         onInit: function () {
+            console.log("Link: " + AppContext.sMp3RelativeLink);
             var sRequestedTrackTitle = AppContext.oTrackJSONModel.getProperty("/title");
             if (sLastTrackTitle === null || sLastTrackTitle != sRequestedTrackTitle) {
                 if (sLastTrackTitle != sRequestedTrackTitle) {

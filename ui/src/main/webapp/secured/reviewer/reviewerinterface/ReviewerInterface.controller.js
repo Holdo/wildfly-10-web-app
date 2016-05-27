@@ -11,6 +11,7 @@ sap.ui.define([
 ], function (jQuery, Controller, Fragment, Filter, JSONModel, MessageToast, MessageBox, SimpleType, ValidateException) {
     "use strict";
 
+    var AppContext = sap.ui.getCore().AppContext;
     var ReviewerInterfaceController = Controller.extend("reviewerinterface.ReviewerInterface", {
         onInit: function () {
             /*this.getView().setModel(new JSONModel(
@@ -25,17 +26,42 @@ sap.ui.define([
             //Pls do not leave
         },
         handleColumnPress: function (oEvent) {
+            var that = this;
             var aCells = oEvent.getSource().getCells();
-            sap.ui.getCore().AppContext.oTrackJSONModel = new JSONModel({
+            AppContext.oTrackJSONModel = new JSONModel({
                 title: aCells[0].getText(),
                 artist: aCells[1].getText(),
                 email: aCells[2].getText(),
                 status: aCells[3].getText()
             });
-            this.getOwnerComponent().getTargets().display("trackView");
-            if (sap.ui.getCore().AppContext.bTrackViewInitialized) {
-                sap.ui.getCore().AppContext.currentTrackController.onInit();
-            }
+            $.ajax({
+                url: "/rest/demo/mp3link/" + AppContext.oTrackJSONModel.getProperty("/title"),
+                type: "GET",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    AppContext.sMp3RelativeLink = data;
+                    that.getOwnerComponent().getTargets().display("trackView");
+                    if (AppContext.bTrackViewInitialized) {
+                        AppContext.currentTrackController.onInit();
+                    }
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                    MessageBox.error(
+                        xhr.responseText,
+                        {
+                            title: "Error!",
+                            actions: [MessageBox.Action.OK]
+                        }
+                    );
+                    var messages = JSON.parse(xhr.responseText);
+                    console.log(messages);
+                },
+                complete: function (xhr, status) {
+
+                }
+            });
         },
         refreshTable: function () {
             var oView = this.getView();
@@ -45,7 +71,7 @@ sap.ui.define([
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
                     oView.setModel(new JSONModel(data));
-                    console.log("Received JSON:" + oView.getModel().getJSON());
+                    console.log("Received JSON: " + oView.getModel().getJSON());
                 },
                 error: function (xhr, status) {
                     console.log(xhr);

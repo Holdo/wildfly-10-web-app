@@ -1,5 +1,6 @@
 package cz.muni.fi.pv243.rest;
 
+import java.io.IOException;
 import java.util.List;
 import javax.json.JsonObject;
 import cz.muni.fi.pv243.model.Demo;
@@ -16,7 +17,7 @@ public interface DemoResource {
 
 	Demo findByTitle(String id);
 
-    String getMp3LinkByTitle(String title);
+    String getMp3LinkByTitle(String title) throws IOException;
 
 	void addTitleWithArtistAndEmail(String artist, String title, String email);
 

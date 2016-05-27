@@ -33,7 +33,6 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
  * @see DemoDAO
  */
 @ApplicationScoped
-@Transactional(REQUIRES_NEW)
 public class DemoDaoImpl implements DemoDAO {
 
 	private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -50,14 +49,17 @@ public class DemoDaoImpl implements DemoDAO {
 	}
 
 	@Override
+	@Transactional(REQUIRES_NEW)
 	public void createDemo(Demo demo) {
 		if (demoCache.containsKey(encode(demo.getTitle()))) {
             throw new TitleAlreadyExistsException(demo.getTitle());
         }
+		if (demo.getTrack() == null) log.warn("Creating Demo with null track!");
 		demoCache.put(encode(demo.getTitle()), demo);
 	}
 
 	@Override
+	@Transactional(REQUIRES_NEW)
 	public void updateDemo(Demo demo) {
         if (!demoCache.containsKey(encode(demo.getTitle()))) {
             throw new DemoNotExistsException(demo.getTitle());
@@ -66,13 +68,18 @@ public class DemoDaoImpl implements DemoDAO {
 	}
 
 	@Override
+	@Transactional(REQUIRES_NEW)
 	public void deleteDemo(Demo demo) {
         demoCache.remove(encode(demo.getTitle()));
 	}
 
 	@Override
 	public Demo findDemo(String title) {
-		return (Demo) demoCache.get(encode(title));
+		Demo demo =  (Demo) demoCache.get(encode(title));
+		if (demo.getTrack() == null) {
+			log.error("Track of " + demo.getTitle() + " is null!");
+		}
+		return demo;
 	}
 
 	@Override
@@ -99,7 +106,6 @@ public class DemoDaoImpl implements DemoDAO {
 		return new LinkedList<>(demos);
 	}
 
-	@Transactional(SUPPORTS)
 	public static String encode(String key) {
 		try {
 			return URLEncoder.encode(key, "UTF-8");

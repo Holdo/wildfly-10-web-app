@@ -1,6 +1,7 @@
 package cz.muni.fi.pv243.jms;
 
 import cz.muni.fi.pv243.dao.DemoDAO;
+import cz.muni.fi.pv243.jms.service.DemoService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +33,9 @@ public class ServiceBean {
 	@Inject
 	private DemoDAO demoDAO;
 
+	@Inject
+	private DemoService demoService;
+
 	private static Demo testDemo = new Demo();
 
 	@Transactional(Transactional.TxType.REQUIRED)
@@ -43,13 +48,13 @@ public class ServiceBean {
 		comments.add(new Comment("Jožo Ráž", "Môže byť."));
 		comments.add(new Comment("Palo Habera", "Nepáči sa mi to."));
 		testDemo.setComments(comments);
+		log.info("Bootstrapped MP3 size: " + this.getMp3().length);
 		testDemo.setTrack(this.getMp3());
-		this.setMp3(null); //free memory
 
-		log.warn("All: {}", demoDAO.findAll());
+		log.info("Should be empty: {}", demoDAO.findAll());
 		demoDAO.createDemo(testDemo);
-		log.warn("Saved: {}", testDemo);
-		log.warn("All: {}", demoDAO.findAll());
+		this.setMp3(null); //free memory
+		log.info("Bootstrapped: {}", demoDAO.findDemo(testDemo.getTitle()));
 	}
 
 }

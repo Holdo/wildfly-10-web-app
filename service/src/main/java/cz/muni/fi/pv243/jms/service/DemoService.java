@@ -2,6 +2,7 @@ package cz.muni.fi.pv243.jms.service;
 
 import cz.muni.fi.pv243.model.Demo;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -24,5 +25,5 @@ public interface DemoService {
 	 * @param title unique track title
 	 * @return relative path (URL)
 	 */
-	String getDemoLink(String title);
+	String getDemoLink(String title) throws IOException;
 }
