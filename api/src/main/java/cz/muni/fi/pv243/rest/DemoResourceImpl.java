@@ -1,10 +1,15 @@
 package cz.muni.fi.pv243.rest;
 
+import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 
+import cz.muni.fi.pv243.jms.DemoDTO;
 import cz.muni.fi.pv243.jms.service.DemoService;
 import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.Mp3Link;
+import lombok.extern.slf4j.Slf4j;
+
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -15,6 +20,7 @@ import java.util.Base64;
  * @author Diana Vilkolakova
  */
 @Path("/demo")
+@Slf4j
 public class DemoResourceImpl implements DemoResource {
 
 	@Inject
@@ -23,8 +29,8 @@ public class DemoResourceImpl implements DemoResource {
 	@GET
 	@Path("/findAll")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Demo> findAll() {
-		return demoService.findAllNoMp3();
+	public List<DemoDTO> findAll() {
+		return demoService.findAll();
 	}
 
 	@GET
@@ -44,7 +50,7 @@ public class DemoResourceImpl implements DemoResource {
 	@GET
 	@Path("/mp3link/{title}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getMp3LinkByTitle(String title) {
+	public Mp3Link getMp3LinkByTitle(@PathParam("title") String title) throws IOException {
 		return demoService.getDemoLink(title);
 	}
 

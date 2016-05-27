@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -60,6 +61,7 @@ public class Demo implements Serializable {
 	 * Demo track.
 	 */
 	@NotNull
+	@JsonIgnore
 	private byte[] track;
 
 	/**
@@ -81,22 +83,21 @@ public class Demo implements Serializable {
 
 		Demo demo = (Demo) o;
 
-		if (!getTitle().equals(demo.getTitle())) return false;
-		return getArtist().equals(demo.getArtist());
+		return getTitle().equals(demo.getTitle());
 	}
 
 	@Override
 	public int hashCode() {
-		int result = getTitle().hashCode();
-		result = 31 * result + getArtist().hashCode();
-		return result;
+		return getTitle().hashCode();
 	}
 
 	@Override
 	public String toString() {
+		String isMp3Present = (track == null)? "no" : "yes";
 		return "Demo {" +
 				"title='" + title + '\'' +
 				", artist='" + artist + '\'' +
+				", mp3=" + isMp3Present +
 				'}';
 	}
 

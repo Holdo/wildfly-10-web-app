@@ -3,6 +3,7 @@ package cz.muni.fi.pv243.jms;
 import cz.muni.fi.pv243.dao.DemoDAO;
 import lombok.Getter;
 import cz.muni.fi.pv243.model.Demo;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  * @author 422718
  */
 @ApplicationScoped
+@Slf4j
 public class TestDaoImpl implements DemoDAO {
 
 	@Getter
@@ -20,6 +22,7 @@ public class TestDaoImpl implements DemoDAO {
 
 	@Override
 	public void createDemo(Demo demo) {
+		log.error("You are using test BEAN");
 		this.lastItem = demo;
 	}
 
@@ -35,6 +38,7 @@ public class TestDaoImpl implements DemoDAO {
 
 	@Override
 	public Demo findDemo(String title) {
+		log.error("You are using test BEAN which returns null");
 		return null;
 	}
 

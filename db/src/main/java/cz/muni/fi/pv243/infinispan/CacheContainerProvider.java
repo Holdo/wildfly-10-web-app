@@ -2,6 +2,7 @@ package cz.muni.fi.pv243.infinispan;
 
 import cz.muni.fi.pv243.dao.DemoDaoImpl;
 import cz.muni.fi.pv243.model.Demo;
+import lombok.extern.slf4j.Slf4j;
 import org.infinispan.commons.api.BasicCacheContainer;
 import org.infinispan.configuration.cache.CacheMode;
 import org.infinispan.configuration.cache.Configuration;
@@ -14,8 +15,6 @@ import org.infinispan.transaction.LockingMode;
 import org.infinispan.transaction.TransactionMode;
 import org.infinispan.transaction.lookup.GenericTransactionManagerLookup;
 import org.infinispan.util.concurrent.IsolationLevel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
@@ -27,9 +26,8 @@ import javax.inject.Inject;
  * @author Marian Camak on 24. 4. 2016.
  */
 @ApplicationScoped
+@Slf4j
 public class CacheContainerProvider {
-
-	private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
 	private BasicCacheContainer manager;
 
@@ -81,7 +79,7 @@ public class CacheContainerProvider {
 			manager.start();
 
 			cacheLogger.init();
-			log.info("Cache container configured. ");
+			log.info("Cache container configured.");
 		}
 		return manager;
 	}

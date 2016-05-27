@@ -28,6 +28,10 @@ sap.ui.define([
                     {author: "author", comment: "LOOOL"},
                     {author: "author2", comment: "MEGA LOOOOOOOOOOOOOOOOOL :)"}
                 ]));*/
+                console.log("Mp3: " + document.location.origin + AppContext.sMp3RelativeLink);
+                this.getView().byId("mp3Player").setContent(
+                    "<audio controls><source src=\"" + AppContext.sMp3RelativeLink + "\" type=\"audio/mpeg\">Your browser does not support the audio element.</audio>"
+                );
                 this.getView().setModel(new JSONModel());
                 var oFeedJSONModel = this.getView().getModel();
                 var sFeedJSON = "[]";

@@ -1,7 +1,7 @@
 package cz.muni.fi.pv243.jms;
 
 import cz.muni.fi.pv243.dao.DemoDAO;
-import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.jms.service.DemoService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,12 @@ import javax.ejb.Startup;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
 
 @Slf4j
 @Getter
@@ -24,6 +30,9 @@ public class ServiceBean {
 
 	@Inject
 	private DemoDAO demoDAO;
+
+	@Inject
+	private DemoService demoService;
 
 	private static Demo testDemo = new Demo();
 

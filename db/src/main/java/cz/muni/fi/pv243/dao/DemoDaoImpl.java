@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,89 +33,84 @@ import static javax.transaction.Transactional.TxType.SUPPORTS;
  * @see DemoDAO
  */
 @ApplicationScoped
-@Transactional(REQUIRES_NEW)
 public class DemoDaoImpl implements DemoDAO {
 
-    public static final String DEMO_CACHE_NAME = "demoCache";
-    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
-    @Inject
-    private CacheContainerProvider provider;
+	private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	public static final String DEMO_CACHE_NAME = "demoCache";
 
-    private BasicCache<String, Object> demoCache;
+	@Inject
+	private CacheContainerProvider provider;
 
-    @PostConstruct
-    public void init() {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-    }
+	private BasicCache<String, Object> demoCache;
 
-    @Override
-    public void createDemo(Demo demo) {
-        if (demoCache.containsKey(encode(demo.getTitle()))) {
+	@PostConstruct
+	public void init() {
+		demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
+	}
+
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void createDemo(Demo demo) {
+		if (demoCache.containsKey(encode(demo.getTitle()))) {
             throw new TitleAlreadyExistsException(demo.getTitle());
         }
-        demoCache.put(encode(demo.getTitle()), demo);
-    }
+		if (demo.getTrack() == null) log.warn("Creating Demo with null track!");
+		demoCache.put(encode(demo.getTitle()), demo);
+	}
 
-    @Override
-    public void updateDemo(Demo demo) {
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void updateDemo(Demo demo) {
         if (!demoCache.containsKey(encode(demo.getTitle()))) {
             throw new DemoNotExistsException(demo.getTitle());
         }
         demoCache.put(encode(demo.getTitle()), demo);
-    }
-
-    @Override
-    public void deleteDemo(Demo demo) {
-        demoCache.remove(encode(demo.getTitle()));
-    }
-
-    @Override
-    public Demo findDemo(String title) {
-        return (Demo) demoCache.get(encode(title));
-    }
-
-    @Override
-    public List<Demo> findDemos(String interpret) {
-        QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
-
-        Query q = qf.from(Demo.class)
-                    .having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
-                    .toBuilder().build();
-        log.info("Infinispan Query DSL: " + q.toString());
-
-        return q.list().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
-    }
-
-    @Override
-	public List<Demo> findAll() {
-        List<Demo> demos = new LinkedList<>();
-        for (Object o : demoCache.values()) {
-            if (o instanceof Demo) {
-                demos.add((Demo) o);
-            }
-        }
-        return demos;
 	}
 
-    @Override
-    public List<Demo> findAllNoMp3() {
-        List<Demo> demos = new LinkedList<>();
-        for (Object o : demoCache.values()) {
-            if (o instanceof Demo) {
-                Demo demo = (Demo) o;
-                demo.setTrack(null);
-                demos.add(demo);
-            }
-        }
-        return demos;
-    }
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void deleteDemo(Demo demo) {
+        demoCache.remove(encode(demo.getTitle()));
+	}
 
-    @Transactional(SUPPORTS)
-    public static String encode(String key) {
-        try {
-            return URLEncoder.encode(key, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	public Demo findDemo(String title) {
+		Demo demo =  (Demo) demoCache.get(encode(title));
+		if (demo.getTrack() == null) {
+			log.error("Track of " + demo.getTitle() + " is null!");
+		}
+		return demo;
+	}
+
+	@Override
+	public List<Demo> findDemos(String interpret) {
+		QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
+
+		Query q = qf.from(Demo.class)
+				.having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
+				.toBuilder().build();
+		log.info("Infinispan Query DSL: " + q.toString());
+
+		return q.list().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Demo> findAll() {
+		Collection<Demo> demos = demoCache.values().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).collect(Collectors.toList());
+		return new LinkedList<>(demos);
+	}
+
+	@Override
+	public List<Demo> findAllNoMp3() {
+		Collection<Demo> demos = demoCache.values().stream().filter(o -> o instanceof Demo).map(o -> (Demo) o).peek(o -> o.setTrack(null)).collect(Collectors.toList());
+		return new LinkedList<>(demos);
+	}
+
+	public static String encode(String key) {
+		try {
+			return URLEncoder.encode(key, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

@@ -1,7 +1,10 @@
 package cz.muni.fi.pv243.jms.service;
 
+import cz.muni.fi.pv243.jms.DemoDTO;
 import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.Mp3Link;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,7 +18,7 @@ public interface DemoService {
 
 	Demo findDemo(String title);
 	List<Demo> findDemos(String interpret);
-	List<Demo> findAll();
+	List<DemoDTO> findAll();
 	List<Demo> findAllNoMp3();
 
 	/**
@@ -24,5 +27,5 @@ public interface DemoService {
 	 * @param title unique track title
 	 * @return relative path (URL)
 	 */
-	String getDemoLink(String title);
+	Mp3Link getDemoLink(String title) throws IOException;
 }
