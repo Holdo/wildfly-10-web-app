@@ -1,7 +1,9 @@
 package cz.muni.fi.pv243.jms.service;
 
 import cz.muni.fi.pv243.dao.DemoDAO;
+import cz.muni.fi.pv243.jms.DemoDTO;
 import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.Mp3Link;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -9,8 +11,8 @@ import javax.inject.Inject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Michal Holic on 22.05.2016
@@ -43,8 +45,9 @@ public class DemoServiceImpl implements DemoService {
 		return demoDAO.findDemos(interpret);
 	}
 
-	public List<Demo> findAll(){
-		return demoDAO.findAll();
+	public List<DemoDTO> findAll(){
+		List<Demo> demos = demoDAO.findAll();
+		return demos.stream().map(DemoDTO::new).collect(Collectors.toList());
 	}
 
 	public List<Demo> findAllNoMp3(){
@@ -52,7 +55,7 @@ public class DemoServiceImpl implements DemoService {
 	}
 
 	@Override
-	public String getDemoLink(String title) throws IOException {
+	public Mp3Link getDemoLink(String title) throws IOException {
 		String fileName = title + ".mp3";
 		String path = System.getProperty("jboss.home.dir") + File.separator + "mp3-resources" + File.separator;
 		File mp3Dir = new File(path);
@@ -80,6 +83,6 @@ public class DemoServiceImpl implements DemoService {
 		} catch (IOException e) {
 			log.error("Error writing mp3 " + title + ": " + e.getMessage());
 		}
-		return "/mp3/" + fileName;
+		return new Mp3Link("/mp3/" + fileName);
 	}
 }

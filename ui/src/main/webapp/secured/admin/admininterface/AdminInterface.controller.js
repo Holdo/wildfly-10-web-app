@@ -39,8 +39,6 @@ sap.ui.define([
                             actions: [MessageBox.Action.OK]
                         }
                     );
-                    var messages = JSON.parse(xhr.responseText);
-                    console.log(messages);
                 },
                 complete: function (xhr, status) {
 
@@ -81,8 +79,6 @@ sap.ui.define([
                             actions: [MessageBox.Action.OK]
                         }
                     );
-                    var messages = JSON.parse(xhr.responseText);
-                    console.log(messages);
                 },
                 complete: function (xhr, status) {
 

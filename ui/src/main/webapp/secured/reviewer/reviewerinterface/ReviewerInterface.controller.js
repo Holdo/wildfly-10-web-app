@@ -39,7 +39,9 @@ sap.ui.define([
                 type: "GET",
                 dataType: "json",
                 success: function (data, textStatus, jqXHR) {
-                    AppContext.sMp3RelativeLink = data;
+                    var oLinkJSON = new JSONModel(data);
+                    console.log("Received JSON: " + oLinkJSON.getJSON());
+                    AppContext.sMp3RelativeLink = oLinkJSON.getProperty("/link");
                     that.getOwnerComponent().getTargets().display("trackView");
                     if (AppContext.bTrackViewInitialized) {
                         AppContext.currentTrackController.onInit();
@@ -55,8 +57,6 @@ sap.ui.define([
                             actions: [MessageBox.Action.OK]
                         }
                     );
-                    var messages = JSON.parse(xhr.responseText);
-                    console.log(messages);
                 },
                 complete: function (xhr, status) {
 
@@ -83,8 +83,6 @@ sap.ui.define([
                             actions: [MessageBox.Action.OK]
                         }
                     );
-                    var messages = JSON.parse(xhr.responseText);
-                    console.log(messages);
                 },
                 complete: function (xhr, status) {
 

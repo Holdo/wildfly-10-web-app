@@ -12,7 +12,7 @@
                 </content>
             </Panel>
             <VBox alignItems="Center" width="auto">
-                <core:HTML content="&lt;p&gt;MP3 player will be here :)&lt;/p&gt;"/>
+                <core:HTML id="mp3Player"/>
                 <FeedInput class="sapUiSmallMarginTopBottom"
                            post="onFeedInputPost"
                            icon="sap-icon://person-placeholder"/>

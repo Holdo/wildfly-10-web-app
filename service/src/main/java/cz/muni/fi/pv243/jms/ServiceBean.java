@@ -40,10 +40,10 @@ public class ServiceBean {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public void run() {
-		testDemo.setEmail("test@email.cz");
-		testDemo.setArtist("Interpreeteurer");
+		testDemo.setEmail("redy1337@gmail.com");
+		testDemo.setArtist("Redy");
 		testDemo.setStatus(UPLOADED);
-		testDemo.setTitle("titelel");
+		testDemo.setTitle("START 2");
 		List<Comment> comments = new ArrayList<>();
 		comments.add(new Comment("Jožo Ráž", "Môže byť."));
 		comments.add(new Comment("Palo Habera", "Nepáči sa mi to."));

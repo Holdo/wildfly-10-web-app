@@ -45,7 +45,11 @@ public class JMSConfigAQ {
 
     @Test
     public void jms() throws InterruptedException {
-        final DemoDTO dto = new DemoDTO("Sample Name", "Sample Artist", new byte[0]);
+        DemoDTO dto = new DemoDTO();
+        dto.setTitle("Sample Name");
+        dto.setArtist("Sample Artist");
+        dto.setEmail("sample@email.com");
+        dto.setStatus(Demo.Status.REJECTED);
 
         this.sender.sendCreateNew(dto);
 

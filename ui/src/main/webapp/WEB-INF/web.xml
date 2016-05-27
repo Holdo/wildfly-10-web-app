@@ -78,6 +78,10 @@
         <extension>css</extension>
         <mime-type>text/css</mime-type>
     </mime-mapping>
+    <mime-mapping>
+        <extension>mp3</extension>
+        <mime-type>audio/mpeg</mime-type>
+    </mime-mapping>
 
     <security-role>
         <role-name>admin</role-name>

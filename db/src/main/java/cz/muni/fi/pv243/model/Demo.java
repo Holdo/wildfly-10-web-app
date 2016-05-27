@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
@@ -60,6 +61,7 @@ public class Demo implements Serializable {
 	 * Demo track.
 	 */
 	@NotNull
+	@JsonIgnore
 	private byte[] track;
 
 	/**

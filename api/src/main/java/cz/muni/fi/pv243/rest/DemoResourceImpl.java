@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 
+import cz.muni.fi.pv243.jms.DemoDTO;
 import cz.muni.fi.pv243.jms.service.DemoService;
 import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.Mp3Link;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.json.JsonObject;
@@ -27,8 +29,8 @@ public class DemoResourceImpl implements DemoResource {
 	@GET
 	@Path("/findAll")
 	@Produces({MediaType.APPLICATION_JSON})
-	public List<Demo> findAll() {
-		return demoService.findAllNoMp3();
+	public List<DemoDTO> findAll() {
+		return demoService.findAll();
 	}
 
 	@GET
@@ -48,7 +50,7 @@ public class DemoResourceImpl implements DemoResource {
 	@GET
 	@Path("/mp3link/{title}")
 	@Produces({MediaType.APPLICATION_JSON})
-	public String getMp3LinkByTitle(@PathParam("title") String title) throws IOException {
+	public Mp3Link getMp3LinkByTitle(@PathParam("title") String title) throws IOException {
 		return demoService.getDemoLink(title);
 	}
 
