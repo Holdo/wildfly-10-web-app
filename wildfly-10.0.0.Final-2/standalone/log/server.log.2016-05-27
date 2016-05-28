@@ -1137,7 +1137,7 @@ Caused by: java.lang.IllegalStateException: Container is down
 2016-05-27 23:52:27,872 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 71) WFLYCLINF0002: Started ui-1.0-SNAPSHOT.war cache from web container
 2016-05-27 23:52:27,872 INFO  [org.jboss.as.clustering.infinispan] (ServerService Thread Pool -- 70) WFLYCLINF0002: Started routing cache from web container
 2016-05-27 23:52:29,642 INFO  [io.undertow.websockets.jsr] (ServerService Thread Pool -- 72) UT026003: Adding annotated server endpoint class cz.muni.fi.pv243.websocket.WebSocketServer for path /websocket/{title}
-2016-05-27 23:52:29,789 INFO  [cz.muni.fi.pv243.ui.ServletInitializer] (ServerService Thread Pool -- 72) Bootstrapping mp3 from /WEB-INF/classes/SAMPLE.mp3
+2016-05-27 23:52:29,789 INFO  [cz.muni.fi.pv243.servlet.ServletInitializer] (ServerService Thread Pool -- 72) Bootstrapping mp3 from /WEB-INF/classes/SAMPLE.mp3
 2016-05-27 23:52:30,354 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (ServerService Thread Pool -- 72) ISPN000078: Starting JGroups channel LabelWeb
 2016-05-27 23:52:30,356 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (ServerService Thread Pool -- 72) ISPN000088: Unable to use any JGroups configuration mechanisms provided in properties {}. Using default JGroups configuration!
 2016-05-27 23:52:30,597 WARNING [org.jgroups.protocols.UDP] (ServerService Thread Pool -- 72) JGRP000015: the receive buffer of socket MulticastSocket was set to 20MB, but the OS only allocated 5,03MB. This might lead to performance problems. Please set your max receive buffer in the OS correctly (e.g. net.core.rmem_max on Linux)
@@ -1417,7 +1417,7 @@ Caused by: java.lang.IllegalStateException: Container is down
 2016-05-27 23:56:07,233 INFO  [org.wildfly.extension.messaging-activemq] (MSC service thread 1-5) WFLYMSGAMQ0002: Bound messaging object to jndi name java:jboss/DefaultJMSConnectionFactory
 2016-05-27 23:56:07,284 INFO  [org.jboss.as.ejb3] (MSC service thread 1-6) WFLYEJB0042: Started message driven bean 'ArtistMessageReceiver' with 'activemq-ra.rar' resource adapter
 2016-05-27 23:56:08,316 INFO  [io.undertow.websockets.jsr] (ServerService Thread Pool -- 73) UT026003: Adding annotated server endpoint class cz.muni.fi.pv243.websocket.WebSocketServer for path /websocket/{title}
-2016-05-27 23:56:08,418 INFO  [cz.muni.fi.pv243.ui.ServletInitializer] (ServerService Thread Pool -- 73) Bootstrapping mp3 from /WEB-INF/classes/SAMPLE.mp3
+2016-05-27 23:56:08,418 INFO  [cz.muni.fi.pv243.servlet.ServletInitializer] (ServerService Thread Pool -- 73) Bootstrapping mp3 from /WEB-INF/classes/SAMPLE.mp3
 2016-05-27 23:56:08,894 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (ServerService Thread Pool -- 73) ISPN000078: Starting JGroups channel LabelWeb
 2016-05-27 23:56:08,895 INFO  [org.infinispan.remoting.transport.jgroups.JGroupsTransport] (ServerService Thread Pool -- 73) ISPN000088: Unable to use any JGroups configuration mechanisms provided in properties {}. Using default JGroups configuration!
 2016-05-27 23:56:09,115 WARNING [org.jgroups.protocols.UDP] (ServerService Thread Pool -- 73) JGRP000015: the receive buffer of socket MulticastSocket was set to 20MB, but the OS only allocated 5,03MB. This might lead to performance problems. Please set your max receive buffer in the OS correctly (e.g. net.core.rmem_max on Linux)
@@ -1486,7 +1486,7 @@ Caused by: an exception which occurred:
 	at org.jboss.weld.bean.proxy.ProxyMethodHandler.invoke(ProxyMethodHandler.java:100)
 	at cz.muni.fi.pv243.jms.ServiceBean$Proxy$_$$_Weld$EnterpriseProxy$.run(Unknown Source)
 	at cz.muni.fi.pv243.jms.ServiceBean$Proxy$_$$_WeldClientProxy.run(Unknown Source)
-	at cz.muni.fi.pv243.ui.ServletInitializer.contextInitialized(ServletInitializer.java:35)
+	at cz.muni.fi.pv243.servlet.ServletInitializer.contextInitialized(ServletInitializer.java:35)
 	at io.undertow.servlet.core.ApplicationListeners.contextInitialized(ApplicationListeners.java:187)
 	at io.undertow.servlet.core.DeploymentManagerImpl.deploy(DeploymentManagerImpl.java:198)
 	at org.wildfly.extension.undertow.deployment.UndertowDeploymentService.startContext(UndertowDeploymentService.java:100)
@@ -1566,7 +1566,7 @@ Caused by: javax.ejb.EJBException: org.infinispan.commons.marshall.NotSerializab
 	at org.jboss.weld.bean.proxy.ProxyMethodHandler.invoke(ProxyMethodHandler.java:100)
 	at cz.muni.fi.pv243.jms.ServiceBean$Proxy$_$$_Weld$EnterpriseProxy$.run(Unknown Source)
 	at cz.muni.fi.pv243.jms.ServiceBean$Proxy$_$$_WeldClientProxy.run(Unknown Source)
-	at cz.muni.fi.pv243.ui.ServletInitializer.contextInitialized(ServletInitializer.java:35)
+	at cz.muni.fi.pv243.servlet.ServletInitializer.contextInitialized(ServletInitializer.java:35)
 	at io.undertow.servlet.core.ApplicationListeners.contextInitialized(ApplicationListeners.java:187)
 	at io.undertow.servlet.core.DeploymentManagerImpl.deploy(DeploymentManagerImpl.java:198)
 	... 8 more
@@ -1611,10 +1611,10 @@ WFLYCTL0184:    New missing/unsatisfied dependencies:
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component.ArtistMessageReceiver.START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component.ServiceBean.START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."com.sun.faces.config.ConfigureListener".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
-      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.ui.AdminSecuredServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
-      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.ui.LogoutServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
-      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.ui.ReviewerSecuredServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
-      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.ui.ServletInitializer".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
+      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.servlet.AdminSecuredServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService]
+      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.servlet.LogoutServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService]
+      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.servlet.ReviewerSecuredServlet".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService]
+      service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."cz.muni.fi.pv243.servlet.ServletInitializer".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService]
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."javax.faces.webapp.FacetTag".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."javax.servlet.jsp.jstl.tlv.PermittedTaglibsTLV".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 
       service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".component."javax.servlet.jsp.jstl.tlv.ScriptFreeTLV".START (missing) dependents: [service jboss.deployment.unit."ui-1.0-SNAPSHOT.war".deploymentCompleteService] 

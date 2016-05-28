@@ -1,4 +1,4 @@
-package cz.muni.fi.pv243.ui;
+package cz.muni.fi.pv243.servlet;
 
 import cz.muni.fi.pv243.jms.ServiceBean;
 import lombok.extern.slf4j.Slf4j;

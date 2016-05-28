@@ -1,4 +1,4 @@
-package cz.muni.fi.pv243.ui;
+package cz.muni.fi.pv243.servlet;
 
 import javax.annotation.security.DeclareRoles;
 import javax.servlet.ServletException;
