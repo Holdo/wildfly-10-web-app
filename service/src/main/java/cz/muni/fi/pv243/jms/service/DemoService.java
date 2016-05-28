@@ -13,13 +13,21 @@ import java.util.List;
 public interface DemoService {
 
 	void createDemo(Demo demo);
+
 	void updateDemo(Demo demo);
+
 	void deleteDemo(Demo demo);
 
 	Demo findDemo(String title);
+
 	List<Demo> findDemos(String interpret);
+
+	/**
+	 * Finds all Demos in the data store but returns DemoDTO's (without mp3 and comments)
+	 *
+	 * @return List of DemoDTO's
+	 */
 	List<DemoDTO> findAll();
-	List<Demo> findAllNoMp3();
 
 	/**
 	 * Stores mp3 track in the webcontext and returns relative path (URL)

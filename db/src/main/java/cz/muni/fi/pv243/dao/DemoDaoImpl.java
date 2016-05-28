@@ -118,19 +118,6 @@ public class DemoDaoImpl implements DemoDAO {
         return demos;
     }
 
-    @Override
-    public List<Demo> findAllNoMp3() {
-        List<Demo> demos = new LinkedList<>();
-        for (Object o : demoCache.values()) {
-            if (o instanceof Demo) {
-                Demo demo = (Demo) o;
-                demo.setTrack(null);
-                demos.add(demo);
-            }
-        }
-        return demos;
-    }
-
     public static String encode(String key) {
         try {
             return URLEncoder.encode(key, "UTF-8");

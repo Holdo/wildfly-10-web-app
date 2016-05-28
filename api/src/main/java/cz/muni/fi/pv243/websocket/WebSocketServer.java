@@ -10,10 +10,9 @@ import cz.muni.fi.pv243.model.Comment;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.enterprise.context.ApplicationScoped;
+import java.util.concurrent.ConcurrentHashMap;
+import javax.ejb.Singleton;
 import javax.inject.Inject;
 import javax.json.Json;
 import javax.websocket.OnClose;
@@ -28,20 +27,23 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.websocket.server.PathParam;
 
-@ApplicationScoped
+@Singleton
 @ServerEndpoint(value = "/websocket/{title}")
 public class WebSocketServer {
 
 	@Inject
 	private DemoService demoService;
 
-	private Map<String, List<Session>> rooms = new HashMap<>();
+	private ConcurrentHashMap<String, List<Session>> rooms = new ConcurrentHashMap<>();
 	private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
 	@OnOpen
 	public void open(Session session, @PathParam("title") String title) {
+		log.info("New session of {} registered with id {}" + session.getId());
 		if (!rooms.containsKey(title)) rooms.put(title, new ArrayList<>());
 		rooms.get(title).add(session);
+		log.info("Current number of rooms " + rooms.size());
+		log.info("Current number of sessions in room " + title + ": " + rooms.get(title).size());
 
 		Demo demo = demoService.findDemo(title);
 		List<Comment> comments = demo.getComments();
@@ -81,11 +83,12 @@ public class WebSocketServer {
 				.add("author", messageJson.getString("author"))
 				.add("comment", messageJson.getString("comment"))
 				.build();
-		log.info("Iterations should be here:");
+		log.info("Sending update to {} sessions", sessions.size());
 		sessions.stream().forEach((sessionForTitle) -> sendToSession(sessionForTitle, notification));
 	}
 
 	private void removeSession(Session session) {
+		log.info("Removing session of " + session.getUserPrincipal().getName() + " id: " + session.getId());
 		rooms.keySet().stream().map((title)
 				-> rooms.get(title)).filter((sessionsOpenedForTitle)
 				-> (sessionsOpenedForTitle != null))

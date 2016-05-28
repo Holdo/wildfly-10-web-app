@@ -50,10 +50,6 @@ public class DemoServiceImpl implements DemoService {
 		return demos.stream().map(DemoDTO::new).collect(Collectors.toList());
 	}
 
-	public List<Demo> findAllNoMp3(){
-		return demoDAO.findAllNoMp3();
-	}
-
 	@Override
 	public Mp3Link getDemoLink(String title) throws IOException {
 		String fileName = title + ".mp3";

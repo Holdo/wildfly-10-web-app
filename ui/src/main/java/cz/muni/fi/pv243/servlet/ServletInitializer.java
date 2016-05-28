@@ -4,7 +4,7 @@ import cz.muni.fi.pv243.jms.ServiceBean;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -20,7 +20,7 @@ public class ServletInitializer implements ServletContextListener {
 
 	private String mp3WARLocation = "/WEB-INF/classes/SAMPLE.mp3";
 
-	@Inject
+	@EJB
 	private ServiceBean bootstrap;
 
 	@Override

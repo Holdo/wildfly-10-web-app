@@ -51,9 +51,4 @@ public class TestDaoImpl implements DemoDAO {
 	public List<Demo> findAll() {
 		return null;
 	}
-
-	@Override
-	public List<Demo> findAllNoMp3() {
-		return null;
-	}
 }
