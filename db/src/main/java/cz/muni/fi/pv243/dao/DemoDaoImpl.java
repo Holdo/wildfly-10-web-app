@@ -4,13 +4,12 @@ import cz.muni.fi.pv243.exceptions.DemoNotExistsException;
 import cz.muni.fi.pv243.exceptions.TitleAlreadyExistsException;
 import cz.muni.fi.pv243.infinispan.CacheContainerProvider;
 import cz.muni.fi.pv243.model.Demo;
+import lombok.extern.slf4j.Slf4j;
 import org.infinispan.Cache;
 import org.infinispan.commons.api.BasicCache;
 import org.infinispan.query.Search;
 import org.infinispan.query.dsl.Query;
 import org.infinispan.query.dsl.QueryFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -30,9 +29,9 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
  * @see DemoDAO
  */
 @ApplicationScoped
+@Slf4j
 public class DemoDaoImpl implements DemoDAO {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
     public static final String DEMO_CACHE_NAME = "demoCache";
 
     @Inject
@@ -67,12 +66,23 @@ public class DemoDaoImpl implements DemoDAO {
     @Override
     @Transactional(REQUIRES_NEW)
     public void deleteDemo(Demo demo) {
+        if (!demoCache.containsKey(encode(demo.getTitle()))) {
+            throw new DemoNotExistsException(demo.getTitle());
+        }
         demoCache.remove(encode(demo.getTitle()));
     }
 
     @Override
     public Demo findDemo(String title) {
-        Demo demo =  (Demo) demoCache.get(encode(title));
+        if (!demoCache.containsKey(encode(title))) {
+            throw new DemoNotExistsException(title);
+        }
+        Object d = demoCache.get(encode(title));
+        if (!(d instanceof Demo)) {
+            throw new DemoNotExistsException(title);
+        }
+
+        Demo demo = (Demo) d;
         if (demo.getTrack() == null) {
             log.error("Track of " + demo.getTitle() + " is null!");
         }
@@ -87,7 +97,6 @@ public class DemoDaoImpl implements DemoDAO {
                 .having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
                 .toBuilder().build();
         log.info("Infinispan Query DSL: " + q.toString());
-
 
         List<Demo> demos = new LinkedList<>();
         for (Object o : q.list()) {
