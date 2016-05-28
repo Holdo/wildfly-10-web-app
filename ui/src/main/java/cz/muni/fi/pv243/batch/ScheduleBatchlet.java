@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 @Stateless
 public class ScheduleBatchlet {
 
-    @Schedule(dayOfWeek="*", hour="5") 
+    @Schedule(dayOfWeek="Sun", hour="0")
     public void processFiles() {
         JobOperator jobOperator = BatchRuntime.getJobOperator();
         jobOperator.start("BatchletDelete", null);

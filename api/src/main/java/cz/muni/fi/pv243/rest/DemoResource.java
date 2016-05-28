@@ -20,7 +20,7 @@ public interface DemoResource {
 
 	Demo findByTitle(String id);
 
-    Mp3Link getMp3LinkByTitle(String title) throws IOException;
+	Mp3Link getMp3LinkByTitle(String title) throws IOException;
 
 	void addTitleWithArtistAndEmail(String artist, String title, String email);
 
@@ -31,6 +31,6 @@ public interface DemoResource {
 	void removeDemo(String title);
 	
 	void addDemo(JsonObject input);
-        
-        void triggerBatchlet();
+		
+	void triggerBatchlet();
 }

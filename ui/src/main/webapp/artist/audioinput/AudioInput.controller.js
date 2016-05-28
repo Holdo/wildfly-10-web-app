@@ -92,7 +92,7 @@ sap.ui.define([
                     success: function (data, textStatus, jqXHR) {
                         console.log(data);
                         MessageBox.success(
-                            "SUCCESS! Response logged in the web browser console.",
+                            "Track has been uploaded!",
                             {
                                 title: "Information",
                                 actions: [MessageBox.Action.OK]

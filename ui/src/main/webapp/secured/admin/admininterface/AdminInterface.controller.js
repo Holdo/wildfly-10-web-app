@@ -45,6 +45,30 @@ sap.ui.define([
                 }
             });
         },
+        onDeleteOldTracksButtonPressed: function (oEvent) {
+            $.ajax({
+                url: "/rest/demo/deleteOldTracks",
+                type: "DELETE",
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    MessageToast.show("Batch job to delete old tracks launched!");
+                },
+                error: function (xhr, status) {
+                    console.log(xhr);
+                    console.log(status);
+                    MessageBox.error(
+                        xhr.responseText,
+                        {
+                            title: "Error!",
+                            actions: [MessageBox.Action.OK]
+                        }
+                    );
+                },
+                complete: function (xhr, status) {
+
+                }
+            });
+        },
         handleColumnPress: function (oEvent) {
             console.log(oEvent.getSource());
             console.log(oEvent.getParameters());

@@ -28,6 +28,16 @@
                         <OverflowToolbarLayoutData priority="NeverOverflow"/>
                     </layoutData>
                 </Button>
+                <Button icon="sap-icon://refresh" text="Refresh tracks" press="refreshTable">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Button>
+                <Button icon="sap-icon://delete" text="Delete old tracks" press="onDeleteOldTracksButtonPressed">
+                    <layoutData>
+                        <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                    </layoutData>
+                </Button>
             </OverflowToolbar>
         </headerToolbar>
         <columns>

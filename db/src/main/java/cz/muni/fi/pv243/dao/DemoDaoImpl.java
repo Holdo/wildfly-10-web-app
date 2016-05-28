@@ -32,97 +32,101 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 @Slf4j
 public class DemoDaoImpl implements DemoDAO {
 
-    public static final String DEMO_CACHE_NAME = "demoCache";
+	public static final String DEMO_CACHE_NAME = "demoCache";
 
-    @Inject
-    private CacheContainerProvider provider;
+	@Inject
+	private CacheContainerProvider provider;
 
-    private BasicCache<String, Object> demoCache;
+	private BasicCache<String, Object> demoCache;
 
-    @PostConstruct
-    public void init() {
-        demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
-    }
+	@PostConstruct
+	public void init() {
+		demoCache = provider.getCacheContainer().getCache(DEMO_CACHE_NAME);
+	}
 
-    @Override
-    @Transactional(REQUIRES_NEW)
-    public void createDemo(Demo demo) {
-        if (demoCache.containsKey(encode(demo.getTitle()))) {
-            throw new TitleAlreadyExistsException(demo.getTitle());
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void createDemo(Demo demo) {
+		if (demoCache.containsKey(encode(demo.getTitle()))) {
+			throw new TitleAlreadyExistsException(demo.getTitle());
+		}
+		if (demo.getTrack() == null) log.warn("Creating Demo with null track!");
+		demoCache.put(encode(demo.getTitle()), demo);
+	}
+
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void updateDemo(Demo demo) {
+		if (!demoCache.containsKey(encode(demo.getTitle()))) {
+			throw new DemoNotExistsException(demo.getTitle());
+		}
+		demoCache.put(encode(demo.getTitle()), demo);
+	}
+
+	@Override
+	@Transactional(REQUIRES_NEW)
+	public void deleteDemo(Demo demo) {
+		if (demo == null) {
+            log.warn("Null argument passed to DemoDao.deleteDemo");
+            return;
         }
-        if (demo.getTrack() == null) log.warn("Creating Demo with null track!");
-        demoCache.put(encode(demo.getTitle()), demo);
-    }
+		if (!demoCache.containsKey(encode(demo.getTitle()))) {
+			throw new DemoNotExistsException(demo.getTitle());
+		}
+		demoCache.remove(encode(demo.getTitle()));
+	}
 
-    @Override
-    @Transactional(REQUIRES_NEW)
-    public void updateDemo(Demo demo) {
-        if (!demoCache.containsKey(encode(demo.getTitle()))) {
-            throw new DemoNotExistsException(demo.getTitle());
-        }
-        demoCache.put(encode(demo.getTitle()), demo);
-    }
+	@Override
+	public Demo findDemo(String title) {
+		if (!demoCache.containsKey(encode(title))) {
+			throw new DemoNotExistsException(title);
+		}
+		Object d = demoCache.get(encode(title));
+		if (!(d instanceof Demo)) {
+			throw new DemoNotExistsException(title);
+		}
 
-    @Override
-    @Transactional(REQUIRES_NEW)
-    public void deleteDemo(Demo demo) {
-        if (!demoCache.containsKey(encode(demo.getTitle()))) {
-            throw new DemoNotExistsException(demo.getTitle());
-        }
-        demoCache.remove(encode(demo.getTitle()));
-    }
+		Demo demo = (Demo) d;
+		if (demo.getTrack() == null) {
+			log.error("Track of " + demo.getTitle() + " is null!");
+		}
+		return demo;
+	}
 
-    @Override
-    public Demo findDemo(String title) {
-        if (!demoCache.containsKey(encode(title))) {
-            throw new DemoNotExistsException(title);
-        }
-        Object d = demoCache.get(encode(title));
-        if (!(d instanceof Demo)) {
-            throw new DemoNotExistsException(title);
-        }
+	@Override
+	public List<Demo> findDemos(String interpret) {
+		QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
 
-        Demo demo = (Demo) d;
-        if (demo.getTrack() == null) {
-            log.error("Track of " + demo.getTitle() + " is null!");
-        }
-        return demo;
-    }
+		Query q = qf.from(Demo.class)
+				.having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
+				.toBuilder().build();
+		log.info("Infinispan Query DSL: " + q.toString());
 
-    @Override
-    public List<Demo> findDemos(String interpret) {
-        QueryFactory qf = Search.getQueryFactory((Cache) demoCache);
+		List<Demo> demos = new LinkedList<>();
+		for (Object o : q.list()) {
+			if (o instanceof Demo) {
+				demos.add((Demo) o);
+			}
+		}
+		return demos;
+	}
 
-        Query q = qf.from(Demo.class)
-                .having("artist").like("%" + (interpret.isEmpty() ? "donotmatch" : interpret) + "%")
-                .toBuilder().build();
-        log.info("Infinispan Query DSL: " + q.toString());
+	@Override
+	public List<Demo> findAll() {
+		List<Demo> demos = new LinkedList<>();
+		for (Object o : demoCache.values()) {
+			if (o instanceof Demo) {
+				demos.add((Demo) o);
+			}
+		}
+		return demos;
+	}
 
-        List<Demo> demos = new LinkedList<>();
-        for (Object o : q.list()) {
-            if (o instanceof Demo) {
-                demos.add((Demo) o);
-            }
-        }
-        return demos;
-    }
-
-    @Override
-    public List<Demo> findAll() {
-        List<Demo> demos = new LinkedList<>();
-        for (Object o : demoCache.values()) {
-            if (o instanceof Demo) {
-                demos.add((Demo) o);
-            }
-        }
-        return demos;
-    }
-
-    public static String encode(String key) {
-        try {
-            return URLEncoder.encode(key, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public static String encode(String key) {
+		try {
+			return URLEncoder.encode(key, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

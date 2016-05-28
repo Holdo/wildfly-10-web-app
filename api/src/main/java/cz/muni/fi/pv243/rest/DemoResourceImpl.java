@@ -16,7 +16,6 @@ import javax.ws.rs.core.MediaType;
 import java.util.Base64;
 import javax.batch.operations.JobOperator;
 import javax.batch.runtime.BatchRuntime;
-import javax.ejb.EJB;
 
 /**
  *
@@ -107,12 +106,12 @@ public class DemoResourceImpl implements DemoResource {
 	public void removeDemo(@PathParam("title") String title) {
 		demoService.deleteDemo(demoService.findDemo(title));
 	}
-        
-        @GET
-        @Path("/deleteOldTracks")
-        public void triggerBatchlet() {
-            JobOperator jobOperator = BatchRuntime.getJobOperator();
-            jobOperator.start("BatchletDelete", null);
-        }
+
+	@DELETE
+	@Path("/deleteOldTracks")
+	public void triggerBatchlet() {
+		JobOperator jobOperator = BatchRuntime.getJobOperator();
+		jobOperator.start("BatchletDelete", null);
+	}
 }
 
