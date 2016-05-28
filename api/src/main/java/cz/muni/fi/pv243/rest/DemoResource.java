@@ -31,4 +31,6 @@ public interface DemoResource {
 	void removeDemo(String title);
 	
 	void addDemo(JsonObject input);
+        
+        void triggerBatchlet();
 }
