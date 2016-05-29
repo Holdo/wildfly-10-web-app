@@ -25,7 +25,7 @@ import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
 public class ServiceBean {
 
 	private byte[] mp3 = null;
-	private boolean mp3Loaded = false;
+	private boolean mp3LoadingStarted = false;
 
 	@Inject
 	private DemoDAO demoDAO;
@@ -36,8 +36,9 @@ public class ServiceBean {
 	private static Demo testDemo = new Demo();
 
 	@Transactional(Transactional.TxType.REQUIRED)
-	public void run() {
-		if (mp3Loaded) return;
+	public synchronized void run() {
+		if (mp3LoadingStarted) return;
+		mp3LoadingStarted = true;
 		testDemo.setEmail("redy1337@gmail.com");
 		testDemo.setArtist("Redy");
 		testDemo.setStatus(UPLOADED);
@@ -54,7 +55,6 @@ public class ServiceBean {
 		demoDAO.createDemo(testDemo);
 		log.info("Bootstrapped: {}", demoDAO.findDemo(testDemo.getTitle()));
 		log.warn("All: {}", demoDAO.findAll());
-		mp3Loaded = true;
 	}
 
 }

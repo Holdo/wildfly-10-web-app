@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.json.Json;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -21,12 +22,17 @@ import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
+
+import org.jboss.ejb3.annotation.Clustered;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.websocket.server.PathParam;
 
+@Named
+@Clustered
 @Singleton
 @ServerEndpoint(value = "/websocket/{title}")
 public class WebSocketServer {
@@ -39,7 +45,8 @@ public class WebSocketServer {
 
 	@OnOpen
 	public void open(Session session, @PathParam("title") String title) {
-		log.info("New session of {} registered with id {}" + session.getId());
+		log.info("THIS IS: " + this);
+		log.info("New session of {} registered with id {}", session.getUserPrincipal().getName(), session.getId());
 		if (!rooms.containsKey(title)) rooms.put(title, new ArrayList<>());
 		rooms.get(title).add(session);
 		log.info("Current number of rooms " + rooms.size());
