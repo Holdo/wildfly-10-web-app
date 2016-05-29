@@ -8,8 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.ejb.Singleton;
-import javax.ejb.Startup;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -20,12 +19,11 @@ import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
 @Slf4j
 @Getter
 @Setter
-@Singleton
-@Startup
+@ApplicationScoped
 public class ServiceBean {
 
+	private String title = "START";
 	private byte[] mp3 = null;
-	private boolean mp3LoadingStarted = false;
 
 	@Inject
 	private DemoDAO demoDAO;
@@ -37,12 +35,10 @@ public class ServiceBean {
 
 	@Transactional(Transactional.TxType.REQUIRED)
 	public synchronized void run() {
-		if (mp3LoadingStarted) return;
-		mp3LoadingStarted = true;
 		testDemo.setEmail("redy1337@gmail.com");
 		testDemo.setArtist("Redy");
 		testDemo.setStatus(UPLOADED);
-		testDemo.setTitle("START");
+		testDemo.setTitle(title);
 		List<Comment> comments = new ArrayList<>();
 		comments.add(new Comment("Jožo Ráž", "Môže byť."));
 		comments.add(new Comment("Palo Habera", "Nepáči sa mi to."));
@@ -54,7 +50,7 @@ public class ServiceBean {
 		log.info("Should be empty: {}", demoDAO.findAll());
 		demoDAO.createDemo(testDemo);
 		log.info("Bootstrapped: {}", demoDAO.findDemo(testDemo.getTitle()));
-		log.warn("All: {}", demoDAO.findAll());
+		log.info("All: {}", demoDAO.findAll());
 	}
 
 }

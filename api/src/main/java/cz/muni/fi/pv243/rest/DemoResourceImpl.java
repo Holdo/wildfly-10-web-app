@@ -2,7 +2,6 @@ package cz.muni.fi.pv243.rest;
 
 import java.io.IOException;
 import java.util.List;
-import javax.inject.Inject;
 
 import cz.muni.fi.pv243.jms.DemoDTO;
 import cz.muni.fi.pv243.jms.service.DemoService;
@@ -10,6 +9,7 @@ import cz.muni.fi.pv243.model.Demo;
 import cz.muni.fi.pv243.model.Mp3Link;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.inject.Inject;
 import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

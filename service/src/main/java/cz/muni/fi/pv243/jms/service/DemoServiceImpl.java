@@ -50,7 +50,6 @@ public class DemoServiceImpl implements DemoService {
 		return demos.stream().map(DemoDTO::new).collect(Collectors.toList());
 	}
 
-	@Override
 	public Mp3Link getDemoLink(String title) throws IOException {
 		String fileName = title + ".mp3";
 		String path = System.getProperty("jboss.home.dir") + File.separator + "mp3-resources" + File.separator;

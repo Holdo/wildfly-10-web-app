@@ -38,7 +38,7 @@ public class CacheContainerProvider {
 		if (manager == null) {
 			GlobalConfiguration glob = GlobalConfigurationBuilder.defaultClusteredBuilder()
 					.transport().defaultTransport()
-					.clusterName("LabelWeb")
+					.clusterName("TracksAppCluster")
 					.globalJmxStatistics().enable()
 					.jmxDomain("org.infinispan.demo")
 //					.addProperty("configurationFile", "jgroups-tcp.xml")

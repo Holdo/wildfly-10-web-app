@@ -38,6 +38,18 @@
             <scope>provided</scope>
             <type>pom</type>
         </dependency>
+        <dependency>
+            <groupId>org.jboss.spec</groupId>
+            <artifactId>jboss-javaee-7.0</artifactId>
+            <scope>provided</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jgroups</groupId>
+            <artifactId>jgroups</artifactId>
+            <version>3.6.7.Final</version>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.jboss.spec.javax.annotation</groupId>
@@ -62,6 +74,12 @@
             <artifactId>jboss-batch-api_1.0_spec</artifactId>
             <version>1.0.0.Final</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-clustering-api</artifactId>
+            <scope>provided</scope>
+            <version>10.0.0.Final</version>
         </dependency>
         <dependency>
             <groupId>org.wildfly</groupId>

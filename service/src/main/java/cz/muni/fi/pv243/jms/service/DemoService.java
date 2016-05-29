@@ -12,14 +12,41 @@ import java.util.List;
  */
 public interface DemoService {
 
+	/**
+	 * Creates Demo
+	 *
+	 * @param demo to create
+	 */
 	void createDemo(Demo demo);
 
+	/**
+	 * Updates Demo
+	 *
+	 * @param demo to update
+	 */
 	void updateDemo(Demo demo);
 
+	/**
+	 * Deletes Demo
+	 *
+	 * @param demo to delete
+	 */
 	void deleteDemo(Demo demo);
 
+	/**
+	 * Finds Demo by title
+	 *
+	 * @param title to find Demo by
+	 * @return found Demo
+	 */
 	Demo findDemo(String title);
 
+	/**
+	 * Finds Demos by interpret
+	 *
+	 * @param interpret to find Demos by
+	 * @return List of found Demos
+	 */
 	List<Demo> findDemos(String interpret);
 
 	/**

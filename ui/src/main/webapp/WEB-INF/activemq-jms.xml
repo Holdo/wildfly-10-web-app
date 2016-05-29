@@ -5,6 +5,9 @@
             <jms-queue name="ArtistQueue">
                 <entry name="java:jboss/exported/jms/ArtistQueue"/>
             </jms-queue>
+            <jms-topic name="TrackTopic">
+                <entry name="java:jboss/exported/jms/TrackTopic"/>
+            </jms-topic>
         </jms-destinations>
     </server>
 </messaging-deployment>
