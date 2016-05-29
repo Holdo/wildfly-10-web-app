@@ -5,7 +5,9 @@ import lombok.*;
 import java.io.Serializable;
 
 /**
- * Created by Michal Holic on 29.05.2016
+ * Track comment notification.
+ *
+ * @author Michal Holic
  */
 @Getter
 @Setter

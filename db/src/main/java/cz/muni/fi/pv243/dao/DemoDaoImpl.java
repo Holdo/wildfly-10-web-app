@@ -23,7 +23,7 @@ import java.util.List;
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
 /**
- * Implementation of interface <link>DemoDAO</link>
+ * Implementation of interface {@link DemoDAO}.
  *
  * @author Marian Camak on 4. 5. 2016.
  * @see DemoDAO
@@ -122,6 +122,12 @@ public class DemoDaoImpl implements DemoDAO {
 		return demos;
 	}
 
+	/**
+	 * Encodes the parameter string as an URL, so it can be used as an infinispan cache key.
+	 *
+	 * @param key to be encoded.
+	 * @return encoded key.
+	 */
 	public static String encode(String key) {
 		try {
 			return URLEncoder.encode(key, "UTF-8");

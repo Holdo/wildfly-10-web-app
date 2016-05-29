@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class representing a demo song, containing several information about it.
+ * Class representing a demo track, containing several information about it.
  *
  * @author Marian Camak
  */
@@ -34,7 +34,7 @@ public class Demo implements Serializable {
 					+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
 	/**
-	 * Unique name of the demo.
+	 * Unique name of the demo. The length of the title has to be more than 2 and less than 256 characters.
 	 */
 	@NotNull
 	@Size(min=3, max=255)
@@ -42,7 +42,7 @@ public class Demo implements Serializable {
 	private String title;
 
 	/**
-	 * Interpret of the demo.
+	 * Interpret of the demo. The length of the artist name has to be more than 2 and less than 256 characters.
 	 */
 	@NotNull
 	@Size(min=3, max=255)
@@ -91,6 +91,11 @@ public class Demo implements Serializable {
 		return getTitle().hashCode();
 	}
 
+	/**
+	 * Returns a demo as a printable string, containing the title, artist name and the presence of the track stored.
+	 *
+	 * @return the demo as a printable string.
+	 */
 	@Override
 	public String toString() {
 		String isMp3Present = (track == null)? "no" : "yes";

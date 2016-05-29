@@ -23,7 +23,7 @@ import javax.inject.Inject;
 /**
  * Implementation of {@link CacheContainerProvider} creating a programmatically configured DefaultCacheManager.
  *
- * @author Marian Camak on 24. 4. 2016.
+ * @author Marian Camak
  */
 @ApplicationScoped
 @Slf4j

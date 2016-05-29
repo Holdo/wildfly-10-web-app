@@ -1,6 +1,7 @@
 package cz.muni.fi.pv243.infinispan;
 
 import cz.muni.fi.pv243.dao.DemoDaoImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.infinispan.manager.DefaultCacheManager;
 import org.infinispan.notifications.Listener;
 import org.infinispan.notifications.cachelistener.annotation.CacheEntryCreated;
@@ -15,8 +16,6 @@ import org.infinispan.notifications.cachelistener.event.CacheEntryVisitedEvent;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Class responsible for logging cache operations.
@@ -24,37 +23,35 @@ import java.util.logging.Logger;
  * @author Marian Camak on 24. 4. 2016.
  */
 @Named
+@Slf4j
 @ApplicationScoped
 @Listener
 public class CacheOperationLogger {
 
-	private final Logger log = Logger.getLogger(this.getClass().getName());
-
 	@Inject
 	private CacheContainerProvider provider;
 
-//	@PostConstruct
 	public void init() {
 		((DefaultCacheManager) provider.getCacheContainer()).getCache(DemoDaoImpl.DEMO_CACHE_NAME).addListener(this);
 	}
 
 	@CacheEntryCreated
 	public void logCacheEntry(CacheEntryCreatedEvent e) {
-		log.log(Level.INFO, "Entry " + e.getValue() + " created. ");
+		log.info("Entry " + e.getValue() + " created. ");
 	}
 
 	@CacheEntryModified
 	public void logCacheEntry(CacheEntryModifiedEvent e) {
-		log.log(Level.INFO, "Entry " + e.getValue() + " modified. ");
+		log.info("Entry " + e.getValue() + " modified. ");
 	}
 
 	@CacheEntryRemoved
 	public void logCacheEntry(CacheEntryRemovedEvent e) {
-		log.log(Level.INFO, "Entry " + e.getValue() + " removed. ");
+		log.info("Entry " + e.getValue() + " removed. ");
 	}
 
 	@CacheEntryVisited
 	public void logCacheEntry(CacheEntryVisitedEvent e) {
-		log.log(Level.INFO, "Entry " + e.getValue() + " visited. ");
+		log.info("Entry " + e.getValue() + " visited. ");
 	}
 }

@@ -1,9 +1,11 @@
 package cz.muni.fi.pv243.exceptions;
 
+import cz.muni.fi.pv243.model.Demo;
+
 import javax.persistence.PersistenceException;
 
 /**
- * Exception signalising that Demo, which is to update, is not created.
+ * Exception signalising that {@link Demo}, which is to update/delete, is not created.
  *
  * @author Marian Camak
  */
