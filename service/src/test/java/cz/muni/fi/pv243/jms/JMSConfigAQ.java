@@ -17,7 +17,7 @@ import javax.inject.Inject;
 /**
  * Tests the JMS settings
  *
- * @author 422718
+ * @author Tomas Valka
  */
 @RunWith(Arquillian.class)
 public class JMSConfigAQ {

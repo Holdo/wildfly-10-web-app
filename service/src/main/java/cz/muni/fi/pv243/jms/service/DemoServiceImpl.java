@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by Michal Holic on 22.05.2016
+ * Implementation of the {@link DemoService} interface.
+ *
+ * @author Michal Holic
+ * @see DemoService
  */
-
 @ApplicationScoped
 @Slf4j
 public class DemoServiceImpl implements DemoService {

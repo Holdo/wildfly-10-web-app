@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static cz.muni.fi.pv243.model.Demo.Status.UPLOADED;
+import static javax.transaction.Transactional.TxType.REQUIRED;
 
 @Slf4j
 @Getter
@@ -33,7 +34,7 @@ public class ServiceBean {
 
 	private static Demo testDemo = new Demo();
 
-	@Transactional(Transactional.TxType.REQUIRED)
+	@Transactional(REQUIRED)
 	public synchronized void run() {
 		testDemo.setEmail("redy1337@gmail.com");
 		testDemo.setArtist("Redy");

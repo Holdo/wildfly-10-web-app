@@ -10,7 +10,7 @@ import javax.jms.Queue;
 /**
  * For sending messages
  *
- * @author 422718
+ * @author Tomas Valka
  */
 @Slf4j
 public class ArtistMessageSender {

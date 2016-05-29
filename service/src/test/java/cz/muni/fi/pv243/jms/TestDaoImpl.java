@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * MOCK emulation
  *
- * @author 422718
+ * @author Tomas Valka
  */
 @ApplicationScoped
 @Slf4j
@@ -43,7 +43,7 @@ public class TestDaoImpl implements DemoDAO {
 	}
 
 	@Override
-	public List<Demo> findDemos(String interpret) {
+	public List<Demo> findDemos(String artist) {
 		return null;
 	}
 

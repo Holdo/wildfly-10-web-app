@@ -13,7 +13,7 @@ import javax.jms.MessageListener;
 /**
  * For receiving messages
  *
- * @author 422718
+ * @author Tomas Valka
  */
 @MessageDriven(activationConfig = {@ActivationConfigProperty(propertyName = "destinationType",
 															 propertyValue = "javax.jms.Queue"),
@@ -39,5 +39,4 @@ public class ArtistMessageReceiver implements MessageListener {
 			log.error("Error receiving message: {}", message, e);
 		}
 	}
-
 }
