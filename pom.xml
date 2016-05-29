@@ -121,6 +121,13 @@
                     <groupId>org.wildfly.plugins</groupId>
                     <artifactId>wildfly-maven-plugin</artifactId>
                     <version>1.1.0.Alpha7</version>
+                    <configuration>
+                        <domain>
+                            <server-groups>
+                                <server-group>main-server-group</server-group>
+                            </server-groups>
+                        </domain>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-war-plugin</artifactId>
