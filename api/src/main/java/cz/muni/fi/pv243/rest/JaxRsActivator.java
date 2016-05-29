@@ -1,8 +1,7 @@
 package cz.muni.fi.pv243.rest;
 
 /**
- *
- * @author skylar
+ * @author Diana Vilkolakova
  */
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;

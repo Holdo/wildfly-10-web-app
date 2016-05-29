@@ -1,41 +1,28 @@
 package cz.muni.fi.pv243.websocket;
 
 /**
- *
- * @author skylar
+ * @author Diana Vilkolakova
  */
 import cz.muni.fi.pv243.jms.TrackNotificationSender;
 import cz.muni.fi.pv243.jms.service.DemoService;
-import cz.muni.fi.pv243.model.TrackNotification;
-import cz.muni.fi.pv243.model.Demo;
 import cz.muni.fi.pv243.model.Comment;
+import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.TrackNotification;
 import lombok.extern.slf4j.Slf4j;
-import org.jgroups.JChannel;
-import org.jgroups.Message;
-import org.jgroups.ReceiverAdapter;
-import org.jgroups.View;
 
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.websocket.*;
+import javax.websocket.server.PathParam;
+import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
-import javax.ejb.Singleton;
-import javax.inject.Inject;
-
-import javax.json.Json;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
-
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.websocket.server.PathParam;
 
 @Singleton
 @Slf4j
