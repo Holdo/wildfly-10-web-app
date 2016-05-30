@@ -1,16 +1,22 @@
 package cz.muni.fi.pv243.batch;
 
-import java.io.File;
+import cz.muni.fi.pv243.jms.service.DemoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.batch.api.Batchlet;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.PersistenceException;
+import java.io.File;
 
-import cz.muni.fi.pv243.jms.service.DemoService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+/**
+ * Class containing the definition of the batch job. When executed, it deletes all the mp3s from the corresponding
+ * folder which are older than 24 hours.
+ *
+ * @author Diana Vilkolakova
+ */
 @Dependent
 @Named("BatchletDeleteFiles")
 public class BatchletDeleteFiles implements Batchlet {
