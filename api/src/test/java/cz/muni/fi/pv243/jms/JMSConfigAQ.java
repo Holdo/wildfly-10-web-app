@@ -1,7 +1,6 @@
 package cz.muni.fi.pv243.jms;
 
 import cz.muni.fi.pv243.model.TrackNotification;
-import cz.muni.fi.pv243.websocket.WebSocketServer;
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -11,7 +10,6 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 
 /**
@@ -27,8 +25,8 @@ public class JMSConfigAQ {
     @Inject
     private TrackNotificationSender sender;
 
-    @EJB(lookup = "java:global/test/DevNullWebSocketServer")
-    private DevNullWebSocketServer webSocketServer;
+    @Inject
+    private DevNullTrackNotificationProcessor testProcessor;
 
     @Deployment
     public static WebArchive createDeployment() {
@@ -36,11 +34,11 @@ public class JMSConfigAQ {
                          .addClasses(TrackNotificationSender.class,
                                      TrackNotificationReceiver.class,
                                      TrackNotification.class,
-                                     DevNullWebSocketServer.class,
-                                     WebSocketServer.class)
+                                     TrackNotificationProcessor.class,
+                                     DevNullTrackNotificationProcessor.class)
                          .addPackage("cz.muni.fi.pv243.model")
                          .addAsWebInfResource("activemq-jms.xml")
-                         .addAsWebInfResource("beans-web_socket_server.xml", "beans.xml")
+                         .addAsWebInfResource("beans.xml")
                          .addAsLibraries(((Maven.resolver().resolve(ASSERTJ)).withTransitivity()).asFile());
     }
 
@@ -52,7 +50,7 @@ public class JMSConfigAQ {
 
         Thread.sleep(1000L); //for message to receive
 
-        Assertions.assertThat(this.webSocketServer.getLastItem())
+        Assertions.assertThat(this.testProcessor.getLastItem())
                   .isNotNull()
                   .isEqualTo(trackNotification);
     }
