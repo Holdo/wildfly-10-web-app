@@ -3,6 +3,8 @@
             xmlns="http://jboss.org/schema/arquillian"
             xsi:schemaLocation="http://jboss.org/schema/arquillian http://www.jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="remoteWildFly" default="true" />
+    <defaultProtocol type="Servlet 3.0" />
+    <container qualifier="remoteWildFly" default="true">
+    </container>
 
 </arquillian>

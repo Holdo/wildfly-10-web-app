@@ -1,17 +1,17 @@
 package cz.muni.fi.pv243.jms;
 
-import cz.muni.fi.pv243.dao.DemoDAO;
-import cz.muni.fi.pv243.model.Demo;
+import cz.muni.fi.pv243.model.TrackNotification;
+import cz.muni.fi.pv243.websocket.WebSocketServer;
 import org.assertj.core.api.Assertions;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 
 /**
@@ -25,39 +25,36 @@ public class JMSConfigAQ {
     public static final String ASSERTJ = "org.assertj:assertj-core:3.2.0";
 
     @Inject
-    private TestDaoImpl testDaoImpl;
-    @Inject
-    private ArtistMessageSender sender;
+    private TrackNotificationSender sender;
+
+    @EJB(lookup = "java:global/test/DevNullWebSocketServer")
+    private DevNullWebSocketServer webSocketServer;
 
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
-                         .addClasses(ArtistMessageSender.class,
-                                     ArtistMessageReceiver.class,
-                                     Demo.class,
-                                     DemoDTO.class,
-                                     DemoDAO.class,
-                                     TestDaoImpl.class)
+                         .addClasses(TrackNotificationSender.class,
+                                     TrackNotificationReceiver.class,
+                                     TrackNotification.class,
+                                     DevNullWebSocketServer.class,
+                                     WebSocketServer.class)
+                         .addPackage("cz.muni.fi.pv243.model")
                          .addAsWebInfResource("activemq-jms.xml")
-                         .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                         .addAsWebInfResource("beans-web_socket_server.xml", "beans.xml")
                          .addAsLibraries(((Maven.resolver().resolve(ASSERTJ)).withTransitivity()).asFile());
     }
 
     @Test
     public void jms() throws InterruptedException {
-        DemoDTO dto = new DemoDTO();
-        dto.setTitle("Sample Name");
-        dto.setArtist("Sample Artist");
-        dto.setEmail("sample@email.com");
-        dto.setStatus(Demo.Status.REJECTED);
+        TrackNotification trackNotification = new TrackNotification("title", "author", "comment");
 
-        this.sender.sendCreateNew(dto);
+        this.sender.sendNotification(trackNotification);
 
         Thread.sleep(1000L); //for message to receive
 
-        Assertions.assertThat(this.testDaoImpl.getLastItem())
+        Assertions.assertThat(this.webSocketServer.getLastItem())
                   .isNotNull()
-                  .isEqualTo(dto.toDemo());
+                  .isEqualTo(trackNotification);
     }
 
 }
